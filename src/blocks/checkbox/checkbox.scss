@@ -1,0 +1,27 @@
+/* Checkbox */
+
+.mdl-checkbox{
+	width:auto;
+}
+
+.mdl-checkbox__focus-helper{
+    display: none;
+}
+
+.mdl-checkbox__label{
+	font-size: inherit;
+}
+
+.mdl-checkbox__tick-outline{
+	transition-duration: .14s;	
+}
+
+.mdl-checkbox.is-checked{
+	.mdl-checkbox__box-outline{
+		border-color: $brand-primary;
+	}
+
+	.mdl-checkbox__tick-outline{
+		background-color: $brand-primary;
+	}
+} 

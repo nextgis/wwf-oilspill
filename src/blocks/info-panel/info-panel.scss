@@ -1,0 +1,128 @@
+/* Info panel */
+
+.info-panel{
+    display: none;
+    width: 370px;
+    background-color: #fff;
+    box-shadow: 0 3px 7px rgba(2, 34, 60, 0.08);
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.286;
+
+    &.active{
+        display: block;
+    }
+
+    p{
+        margin-top:0;
+        margin-bottom: 8px;
+    }
+
+    ul, ol{
+        margin-top: 8px;
+        margin-bottom: 8px;
+        list-style-type: none;
+        padding-left:0;
+
+        li{
+            position: relative;
+            padding-left: 18px;
+            margin-top: 6px;
+
+            &:first-child{
+                margin-top:0;
+            }
+        }
+    }
+
+    ul li::before{
+        content:"";
+        position: absolute;
+        left:0;
+        top: 0.4em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $brand-primary;
+    }
+
+    &.overflowed{
+        .info-panel__close{
+            right: 10px;
+        }
+    }
+}
+    .info-panel__inner{        
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 16px 20px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #dddddd;
+        }
+         
+        &::-webkit-scrollbar-thumb {
+            background-color: #b5b5b5;
+        }
+    }
+
+    .info-panel__close {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-size: 20px;
+    }
+
+    .info-panel__title{
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        font-family: $headings-font-family;
+        padding-right: 30px;        
+        line-height: 1.4;
+    }
+
+    .info-panel__location{
+        color: #999;
+    }
+
+    .info-panel__status{
+        margin: 12px -20px;
+        padding: 12px 20px;
+        background-color: #efefef;
+        color: fade-out($text-color, .18);
+    }
+
+    .info-panel__item{
+        border-top: 1px solid #efefef;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 12px 20px;
+
+        .info-panel__title + &,
+        .info-panel__location + &{
+            margin-top: 12px;
+        }
+    }
+
+    .info-panel__item-title{
+        font-weight: bold;
+        font-family: $headings-font-family;
+        margin-bottom: 10px;
+        text-transform: capitalize;
+    }
+
+    .info-panel__status + .info-panel__item{
+        border-top:0;
+        padding-top:0;
+        margin-top: 12px;
+    }
+.info-panel__link{
+    text-decoration: none;
+    border-bottom: 1px solid fade-out($brand-primary, .86);
+}

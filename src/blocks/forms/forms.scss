@@ -1,0 +1,22 @@
+/* Forms */
+
+label{
+    font-weight: normal;
+}
+
+.form-control{
+    font-size: 14px;
+    border-width: 1px;
+    height: 40px;
+    box-shadow: none;
+    border-color: #dedede;
+    border-radius: 2px;
+    padding-left:10px;
+    padding-right: 10px;
+
+
+    &:focus{
+        box-shadow:none;
+        border-color: $brand-primary;
+    }
+}

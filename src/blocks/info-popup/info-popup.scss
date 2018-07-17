@@ -1,0 +1,102 @@
+/* Info popup */
+
+.info-popup {
+    position: absolute;
+    background-color: white;
+    border-radius: 2px;
+    bottom: 10px;
+    left: -200px;
+    width: 400px;
+    font-size: 13px;
+    z-index: 1000;
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+              0 3px 14px 2px rgba(0, 0, 0, $shadow-ambient-shadow-opacity),
+              0 5px 5px -3px rgba(0, 0, 0, $shadow-key-umbra-opacity);
+
+    &::after, 
+    &::before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+    }
+
+    &:after{
+        border-top-color: white;
+        border-width: 8px;
+        left: 200px;
+        margin-left: -8px;
+    }
+
+    &:before{
+        border-top-color: #dedede;
+        border-width: 9px;
+        left: 200px;
+        margin-left: -9px;  
+    }
+
+    &.slideInDown {
+      animation-name: slideInDown;
+      animation-duration: .15s;
+      animation-fill-mode: both;
+    }
+}
+
+.info-popup__scroller{
+    position: relative;    
+    max-height: 320px;
+    overflow: auto;    
+    padding: 12px 16px 20px;
+}
+
+.info-popup__close {   
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    font-size: 20px;
+}
+
+.info-popup__title{
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid #efefef;
+}
+    .info-popup__name{
+        font-family: $headings-font-family;
+        font-size: 14px;
+        font-weight: bold;
+        padding-right: 15px;
+    }
+    .info-popup__layer{
+        color: #58aed4;
+    }
+        .info-popup__layer-icon{
+            position: relative;
+            margin-right: 2px;
+            font-size: 16px;
+            margin-left: -2px;
+            top: 3px;
+            color: #58aed4;
+        }
+
+
+.info-popup__table{
+    width: 100%;
+
+    td{
+        border-bottom: 1px solid #efefef;
+        padding: 6px 4px;
+
+        &:first-child{
+            color: #888;
+        }
+    }
+
+    tr:hover{
+        td{
+            background-color: #fbfbfb;
+        }
+    }
+}

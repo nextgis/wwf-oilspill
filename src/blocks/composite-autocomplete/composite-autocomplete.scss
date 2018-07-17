@@ -1,0 +1,36 @@
+/* Composite autocomplete */
+
+.control-wrapper{
+	margin-bottom: 16px;
+    position: relative;
+}
+
+.control-wrapper--icon{
+	.form-control{
+		padding-right: 40px;
+	}
+}
+
+.control-icon{
+	position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    line-height: 40px;
+    width: 37px;
+    text-align: center;
+    font-size: 20px;
+    color: #aaa;
+}
+
+.composite-autocomplete__add{
+	text-decoration: none;
+	border-bottom: 1px dashed fade-out($link-color, .8);
+
+	&:hover,
+	&:active,
+	&:focus{
+		text-decoration: none;
+		border-bottom: 1px dashed fade-out($link-hover-color, .8);
+	}
+}

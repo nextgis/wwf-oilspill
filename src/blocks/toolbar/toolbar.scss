@@ -1,0 +1,37 @@
+/* Toolbar */
+
+.toolbar{
+	padding: 8px 16px;
+    background: #f5f5f5;
+    margin-bottom: 8px;
+}
+
+	.toolbar__item{
+		margin-left: 22px;
+	    color: #888;
+	    text-decoration: none;
+
+	    &:hover,
+	    &:focus,
+	    &:active{
+	    	text-decoration: none;
+	    	color: #000;
+
+	    	.toolbar__icon{
+	    		color: #000;
+	    	}
+	    }
+
+	    &:first-child{	    	
+	    	margin-left:0;
+	    }
+	}
+
+	.toolbar__icon{
+		font-size: 16px;
+	    vertical-align: middle;
+	    margin-right: 5px;
+	}
+	.toolbar__text{
+	    vertical-align: middle;
+	}

@@ -1,0 +1,31 @@
+/* Layers group */
+
+.layers-group{
+    position: relative;
+    padding: 16px 20px;
+    border-bottom: 1px solid #efefef;
+
+    &--filtered{
+        .layers-group__filter-icon::after{
+            content:"";
+            position: absolute;         
+            right: -3px;
+            top: -1px;
+            width: 13px;
+            height: 13px;  
+            border-radius: 50%;
+            background: #ff583a;            
+            border: 4px solid #fff;
+        }
+    }
+}
+
+.layers-group__title{
+    @include heading-level-2();
+}
+
+.layers-group__filter-icon{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}

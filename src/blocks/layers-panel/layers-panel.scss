@@ -1,0 +1,30 @@
+/* Layers panel */
+
+.layers-panel__header{
+	background-color: $brand-primary;
+	padding-right: 60px;
+	border-bottom: 0;
+}
+
+.layers-panel__title{
+	margin:0;
+	color: #fff;
+	line-height: inherit;
+}
+
+.layers-panel__search-icon,
+.layers-panel__search-icon.material-icons{
+	position: absolute;
+	right:18px;
+	top:0;
+	line-height: inherit;
+	color: fade-out(#fff, .12);
+	text-decoration: none;
+
+	&:hover,
+	&:focus,
+	&:active{
+		color: #fff;
+		text-decoration: none;
+	}
+}

@@ -1,0 +1,109 @@
+.expanded-control{
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	right: 20px;
+	top: 20px;
+    transform: translate3d(0,0,0);
+    border-radius: 2px;
+
+	&.active{
+		width: 320px;
+		height: auto;
+		overflow: hidden;
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+              0 3px 1px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
+              0 1px 5px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
+    	transition: .3s box-shadow .2s step-end;
+
+		.expanded-control__content{
+			position: relative;
+			opacity: 1;
+			transition: .2s opacity .3s;
+			z-index: 300;
+			width: auto;
+			height: auto;
+		}
+
+		.expanded-control__button{
+			opacity: 0;
+		}
+
+		.expanded-control__layer{
+			transform: scale(100);
+			transition: transform 1.6s;
+		}
+	}
+}
+
+.expanded-control__content{
+	position: absolute;
+	opacity: 0;
+	max-height: calc(100vh - 90px);
+	overflow-y: auto;
+	overflow-x:hidden;
+	width: 30px;
+	height: 30px;
+}
+
+.expanded-control__button{
+	position: absolute;
+	right:0;
+	top:0;
+	z-index: 200;
+}
+
+.expanded-control__layer{
+	position: absolute;
+	right:0;
+	top:0;
+	background-color: #fff;
+	transform: scale(0);
+	width: 30px;
+	height: 30px;
+	transform-origin: right top;
+}
+
+.expanded-control__close {
+	position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 20px;
+}
+
+.map-button{
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
+	color: #888;
+	margin:0;
+	font-weight: normal;
+	border:0;
+	outline:0;	
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, $shadow-key-penumbra-opacity),
+              0 3px 1px -2px rgba(0, 0, 0, $shadow-key-umbra-opacity),
+              0 1px 5px 0 rgba(0, 0, 0, $shadow-ambient-shadow-opacity);
+    border-radius: 2px;
+    padding:0;
+    text-align: center;
+	
+	&:focus{
+		outline:0;
+		background-color: #fff;
+	}
+
+	&:hover,
+	&:active{
+		outline:0;
+		background-color: #fbfbfb;
+		color: #059fe0;
+
+		.map-button__icon{
+			color: #059fe0;
+		}
+	}
+}
+
+.map-button__icon{
+	line-height: 30px;
+}

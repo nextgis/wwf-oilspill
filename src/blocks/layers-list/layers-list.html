@@ -1,0 +1,13 @@
+<script id="layers-list-template" type="text/x-handlebars-template">
+    <ul class="layers-list list-unstyled">
+        {{#each layers}}
+            <li>
+                <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="{{this.label}}"  {{#if this.visibility}} checked {{/if}}> {{this.label}}
+                    </label>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</script>

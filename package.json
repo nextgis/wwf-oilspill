@@ -1,0 +1,28 @@
+{
+  "name": "barents-kara-xprojects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.11",
+    "handlebars": "^4.0.6",
+    "webpack": "^1.14.0"
+  },
+  "devDependencies": {
+    "jquery": "^3.1.1",
+    "leaflet": "^1.0.2",
+    "normalize-css": "^2.3.1",
+    "proj4leaflet": "^0.7.2",
+    "webpack-stream": "^3.2.0"
+  }
+}
