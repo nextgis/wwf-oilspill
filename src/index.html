@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Спорные и черезвычайные ситуации на Нефтегазовых проектах баренцевоморского региона и обской губы Карского моря</title>
-    <link rel="stylesheet" href="css/main.css?20170705" />
 
 </head>
 <body>
     <div class="map-container">
         <div id="map" class="map"></div>
         <div id="filter-period" class="filter-list">
-            <label>Квартал: 
+            <label>Квартал:
                 <select name="filters">
                     <option selected>Все</option>
                     <option>2017-Q4</option>
@@ -18,7 +17,7 @@
             </label>
         </div>
         <div id="filter-company" class="filter-list">
-            <label>Компания: 
+            <label>Компания:
                 <select name="filters">
                     <option selected>Все</option>
                     <option>Газпромнефть</option>
@@ -32,10 +31,10 @@
                     <div class="legend-list__icon legend-list__icon--oilgas legend-list__icon--point"></div>
                     <div class="legend-list__text">Объекты нефтегазовых проектов</div>
                 </li>
-            </ul>    
+            </ul>
         </div>
     </div>
-    <a href="http://nextgis.ru" id="author-logo" class="author-logo" target="_blank"><img src="img/nextgis.png" alt="NextGIS"></a>
+    <a href="http://nextgis.ru" id="author-logo" class="author-logo" target="_blank"><img src="images/nextgis.png" alt="NextGIS"></a>
 
     <!-- Handlebars templates -->
     <script id="info-panel-template" type="text/x-handlebars-template">
@@ -49,7 +48,7 @@
             </div>
         {{/if}}
         {{#if location}}<div class="info-panel__location">{{location}}</div>{{/if}}
-        {{#if status}}<div class="info-panel__status">{{status}}</div>{{/if}}            
+        {{#if status}}<div class="info-panel__status">{{status}}</div>{{/if}}
         {{#each properties}}
             <div class="info-panel__item">
                 <div class="info-panel__item-title">{{@key}}</div>
@@ -73,7 +72,7 @@
                     "name": "oilgas_es_pt",
                     "id": 176,
                     "style": {
-                        radius: 5, 
+                        radius: 5,
                         fillOpacity: 1,
                         weight: 2,
                         color: "#ffffff",
@@ -82,7 +81,7 @@
                         fillRule: "nonzero"
                     },
                     "hoverStyle": {
-                        radius: 7, 
+                        radius: 7,
                         fillOpacity: 1,
                         weight: 4,
                         color: "#ffffff",
@@ -94,6 +93,5 @@
             ]
         };
     </script>
-    <script src="js/main.js?20170705_2"></script>
 </body>
 </html>
