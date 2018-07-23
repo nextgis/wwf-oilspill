@@ -3,9 +3,7 @@ import L from 'leaflet';
 import LProj from 'proj4leaflet';
 import { InfoPanel } from '../info-panel/InfoPanel';
 import { Legend } from '../legend/Legend';
-import { FilterList } from '../filter-list/FilterList';
-import { FilterPeriod } from '../filter-period/FilterPeriod';
-import { FilterRegion } from '../filter-region/FilterRegion';
+import { FeatureFilter } from '../feature-filter/FeatureFilter';
 import { AuthorLogo } from '../author-logo/AuthorLogo';
 import { getConnector } from '../../services/loadResource';
 import '../home-control/HomeControl';
@@ -46,15 +44,14 @@ Map.prototype.renderMap = function () {
   that.legend = new Legend({ elem: document.getElementById('legend') }).addTo(that.map);
 
   // add Filter-list
-  that.filterList = new FilterList({ elem: document.getElementById('filter-company') }).addTo(that.map);
+  that.featureFilter = new FeatureFilter({
+    filters: [
+      {type: 'prop', propName: 'name', label: 'Компания'},
+      {type: 'prop', propName: 'date', label: 'Квартал'},
+      {type: 'prop', propName: 'region', label: 'Регион'},
+    ]
+  }).addTo(that.map);
 
-  // add Filter-list
-  that.filterPeriod = new FilterPeriod({ elem: document.getElementById('filter-period') }).addTo(that.map);
-
-  // add Filter-list
-  that.filterRegion = new FilterRegion({ elem: document.getElementById('filter-region') }).addTo(that.map);
-
-  that.map.filters = { 'company': 'Все', 'period': 'Все', 'region': 'Все' };
 
   // add Info panel
   that.infoPanel = new InfoPanel().addTo(that.map);
@@ -120,6 +117,7 @@ Map.prototype._onGeojsonLoad = function (data, mapLayer) {
       });
     }
   }).addTo(that.map);
+  that.featureFilter.setLayer(that.geojson);
 
   /*markers.forEach(function(marker){
       marker.addTo(that.map);

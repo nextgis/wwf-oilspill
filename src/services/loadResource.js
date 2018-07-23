@@ -7,7 +7,7 @@ export var getConnector = function (options) {
   return _connector;
 };
 
-// // Fake connector for test only
+// Fake connector for test only
 
 // var DELAY = 100;
 // export var getConnector = function () {
