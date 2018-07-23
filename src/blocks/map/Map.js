@@ -7,6 +7,7 @@ import { FilterList } from '../filter-list/FilterList';
 import { FilterPeriod } from '../filter-period/FilterPeriod';
 import { FilterRegion } from '../filter-region/FilterRegion';
 import { AuthorLogo } from '../author-logo/AuthorLogo';
+import { getConnector } from '../../services/loadResource';
 import '../home-control/HomeControl';
 import '../fullscreen-control/FullscreenControl';
 
@@ -14,9 +15,11 @@ import '../fullscreen-control/FullscreenControl';
 
 export function Map(options) {
   this.mapConfig = options.mapConfig;
+  this.apiConnector = getConnector({ baseUrl: options.mapConfig.nextgiscomUrl });
 
   this.renderMap();
 }
+
 
 Map.prototype.renderMap = function () {
   var that = this;
@@ -67,62 +70,60 @@ Map.prototype.renderMap = function () {
 
 Map.prototype.addLayer = function (mapLayer) {
   var that = this;
+
   var defIcon = new L.Icon.Default();
   defIcon.options.iconSize = [28, 40];
 
   // Set alias
-  $.ajax({
-    url: that.mapConfig.nextgiscomUrl + '/api/resource/' + mapLayer.id,
-    dataType: 'JSON',
-    success: function (data) {
-      mapLayer.fieldNames = data.feature_layer.fields;
-      loadGeojson();
-    }
+  this.apiConnector.connect(mapLayer.id, function (data) {
+    mapLayer.fieldNames = data.feature_layer.fields;
+    loadGeojson();
   });
 
   // Load GeoJSON
   var loadGeojson = function () {
-    $.ajax({
-      url: that.mapConfig.nextgiscomUrl + '/api/resource/' + mapLayer.id + '/geojson',
-      dataType: 'JSON',
-      success: function (data) {
-        var crs3857 = new LProj.CRS('EPSG:3857');
-        that.geojson = L.geoJson(data, {
-          style: function () {
-            return mapLayer.style;
-          },
-          coordsToLatLng: function (coords) {
-            var point = L.point(coords[0], coords[1]);
-            return crs3857.projection.unproject(point);
-          },
-          pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng);//, {icon: defIcon});
-          },
-          onEachFeature: function (feature, layer) {
-            /*if (mapLayer.centroidStyle){
-                if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-                    layer._latlngs.forEach(function(poly){
-                        var bounds = L.polygon(poly).getBounds(),
-                        center = bounds.getCenter(),
-                        marker = L.circleMarker(center, mapLayer.centroidStyle);
-                        marker.on("click", function(e){ that.highlightFeature(e, layer, mapLayer);});
-                        markers.push( marker);
-                    });
-                }
-            }*/
-
-            layer.on({
-              click: function (e) { that.highlightFeature(e, e.target, mapLayer); }
-            });
-          }
-        }).addTo(that.map);
-
-        /*markers.forEach(function(marker){
-            marker.addTo(that.map);
-        })*/
-      }
-    });
+    that.apiConnector.geojson(mapLayer.id, function (data) {
+      that._onGeojsonLoad(data, mapLayer);
+    })
   }
+}
+
+Map.prototype._onGeojsonLoad = function (data, mapLayer) {
+  var that = this;
+  var crs3857 = new LProj.CRS('EPSG:3857');
+  that.geojson = L.geoJson(data, {
+    style: function () {
+      return mapLayer.style;
+    },
+    coordsToLatLng: function (coords) {
+      var point = L.point(coords[0], coords[1]);
+      return crs3857.projection.unproject(point);
+    },
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng);//, {icon: defIcon});
+    },
+    onEachFeature: function (feature, layer) {
+      /*if (mapLayer.centroidStyle){
+          if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+              layer._latlngs.forEach(function(poly){
+                  var bounds = L.polygon(poly).getBounds(),
+                  center = bounds.getCenter(),
+                  marker = L.circleMarker(center, mapLayer.centroidStyle);
+                  marker.on("click", function(e){ that.highlightFeature(e, layer, mapLayer);});
+                  markers.push( marker);
+              });
+          }
+      }*/
+
+      layer.on({
+        click: function (e) { that.highlightFeature(e, e.target, mapLayer); }
+      });
+    }
+  }).addTo(that.map);
+
+  /*markers.forEach(function(marker){
+      marker.addTo(that.map);
+  })*/
 }
 
 Map.prototype.highlightFeature = function (e, layer, mapLayer) {
