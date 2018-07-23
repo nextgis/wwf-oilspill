@@ -1,11 +1,4 @@
-@import "normalize-css/normalize";
-@import "leaflet/dist/leaflet";
 @import "_variables";
-// @import "material-design-lite/src/_color-definitions";
-// @import "material-design-lite/src/_functions";
-// @import "_my-mdl-variables.scss";
-
-//@import "../blocks/**/css/*"
 
 // Fonts
 @font-face {
@@ -46,7 +39,7 @@
 // 	font-size: 15px;
 // 	text-transform: uppercase;
 // 	letter-spacing: .4px;
-// 	word-spacing: 1.5px;	
+// 	word-spacing: 1.5px;
 // 	margin-bottom: 12px;
 // 	font-weight: bold;
 // 	color: #555;
@@ -111,13 +104,16 @@ body{
   color: $text-color;
 }
 
+// elements
+
+@import "./elements/btn";
+
 // Components
 @import "../blocks/map/map";
 @import "../blocks/leaflet/leaflet";
 @import "../blocks/info-panel/info-panel";
 @import "../blocks/author-logo/author-logo";
 @import "../blocks/legend/legend";
-@import "../blocks/filter-list/filter-list";
 
 a,
 .leaflet-container a{
