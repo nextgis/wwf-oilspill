@@ -145,7 +145,7 @@ Map.prototype.getFieldNameAlias = function (item, mapLayer) {
 
 Map.prototype.highlightFeature = function (e, layer, mapLayer) {
   this.checkFeatureVisibility(e);
-  this.infoPanel.show(layer.feature.properties, mapLayer.fieldNames);
+  this.infoPanel.show(layer.feature, mapLayer.fieldNames, mapLayer);
 
   if (this.selectedLayer) {
     this.unhighlightFeature(this.selectedLayer);

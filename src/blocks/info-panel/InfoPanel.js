@@ -3,6 +3,8 @@ import $ from 'jquery';
 import L from 'leaflet';
 import Handlebars from 'handlebars';
 
+import {template} from '../../utils';
+
 // import './info-panel.scss';
 
 export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
@@ -16,18 +18,18 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
   onAdd: function () {
     var that = this;
 
-    that.container = L.DomUtil.create('div', 'info-panel'),
-    that.closer = L.DomUtil.create('a', 'info-panel__close material-icons', that.container),
-    that.inner = L.DomUtil.create('div', 'info-panel__inner', that.container);
+    this.container = L.DomUtil.create('div', 'info-panel'),
+    this.closer = L.DomUtil.create('a', 'info-panel__close material-icons', this.container),
+    this.inner = L.DomUtil.create('div', 'info-panel__inner', this.container);
 
-    that.closer.innerHTML = 'close';
-    that.closer.setAttribute('href', '#');
+    this.closer.innerHTML = 'close';
+    this.closer.setAttribute('href', '#');
 
-    $(that.container).on('mousewheel mousedown mousemove mouseup click', function (e) {
+    $(this.container).on('mousewheel mousedown mousemove mouseup click', function (e) {
       e.stopPropagation();
     })
 
-    $(that.closer).on('click', function (e) {
+    $(this.closer).on('click', function (e) {
       e.preventDefault();
       that.hide();
     });
@@ -36,10 +38,11 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
       that.checkOverflowing();
     })
 
-    L.DomEvent.disableScrollPropagation(that.container);
-    return that.container;
+    L.DomEvent.disableScrollPropagation(this.container);
+    return this.container;
   },
-  show: function (props, fieldNames) {
+  show: function (feature, fieldNames, mapLayer) {
+    var props = feature.properties;
     var propsAliased = {},
       html;
 
@@ -58,7 +61,15 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
       status: props.startdate,
       properties: propsAliased
     });
+
     $(this.container).find('.info-panel__inner').html(html);
+
+    var btn = $(this.container).find('#get-details-info-btn');
+    $(btn).on('click', function (e) {
+      e.preventDefault();
+      var win = window.open(template(mapLayer.detailUrl, {id: feature.id}), '_blank');
+      win.focus();
+    });
 
     this.checkOverflowing();
     this.inner.scrollTop = 0;
