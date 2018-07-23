@@ -101,10 +101,46 @@ Map.prototype._onGeojsonLoad = function (data, mapLayer) {
       layer.on({
         click: function (e) { that.highlightFeature(e, layer, mapLayer); }
       });
+      that.setFeatureLayerPopup(feature, layer, mapLayer);
     }
   }).addTo(that.map);
   that.featureFilter.setLayer(that.geojson);
 
+}
+
+Map.prototype.setFeatureLayerPopup = function (feature, layer, mapLayer) {
+  var popupFieldsConfig = mapLayer.popupFields;
+  var popupFields = [];
+  for (var fry = 0; fry < popupFieldsConfig.length; fry++) {
+    var keyname = popupFieldsConfig[fry];
+    var toPopup = feature.properties && feature.properties[keyname];
+    if (toPopup) {
+      popupFields.push({keyname: keyname, value: toPopup});
+    }
+  }
+  if (popupFields.length) {
+    var message = document.createElement('div');
+    for (var f = 0; f < popupFields.length; f++) {
+      var item = popupFields[f];
+      var element = document.createElement('div');
+      var label = this.getFieldNameAlias(item, mapLayer)
+      var lableHTML = label ? '<h4>' + label + '</h4>' : ''
+      element.innerHTML = lableHTML + item.value;
+      message.appendChild(element);
+    }
+    layer.bindPopup(message);
+  }
+}
+
+Map.prototype.getFieldNameAlias = function (item, mapLayer) {
+  var fieldNames = mapLayer.fieldNames;
+  for (var fry = 0; fry < fieldNames.length; fry++) {
+    var fieldNameAlias = fieldNames[fry];
+    if (item.keyname === fieldNameAlias.keyname) {
+      return fieldNameAlias;
+    }
+  }
+  return '';
 }
 
 Map.prototype.highlightFeature = function (e, layer, mapLayer) {

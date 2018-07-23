@@ -46,7 +46,7 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
     $.each(props, function (key, value) {
       var apiField = $.grep(fieldNames, function (n) { return n.keyname == key; })[0];
 
-      if (key != 'name' && key != 'lat' && key != 'lon' && value) {
+      if (key != 'name' && key != 'lat' && key != 'lon' && value && apiField && apiField.display_name) {
         propsAliased[apiField.display_name] = value;
       }
     });
