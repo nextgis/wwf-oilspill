@@ -41,7 +41,7 @@ Map.prototype.renderMap = function () {
   that.authorLogo = new AuthorLogo({ elem: document.getElementById('author-logo') }).addTo(that.map);
 
   // add Legend
-  that.legend = new Legend({ elem: document.getElementById('legend') }).addTo(that.map);
+  that.legend = new Legend({ styles: that.mapConfig.styles }).addTo(that.map);
 
   // add Filter-list
   that.featureFilter = new FeatureFilter({
@@ -89,9 +89,6 @@ Map.prototype._onGeojsonLoad = function (data, mapLayer) {
   var that = this;
   var crs3857 = new LProj.CRS('EPSG:3857');
   that.geojson = L.geoJson(data, {
-    style: function () {
-      return mapLayer.style;
-    },
     coordsToLatLng: function (coords) {
       var point = L.point(coords[0], coords[1]);
       return crs3857.projection.unproject(point);
@@ -100,43 +97,48 @@ Map.prototype._onGeojsonLoad = function (data, mapLayer) {
       return L.circleMarker(latlng);//, {icon: defIcon});
     },
     onEachFeature: function (feature, layer) {
-      /*if (mapLayer.centroidStyle){
-          if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-              layer._latlngs.forEach(function(poly){
-                  var bounds = L.polygon(poly).getBounds(),
-                  center = bounds.getCenter(),
-                  marker = L.circleMarker(center, mapLayer.centroidStyle);
-                  marker.on("click", function(e){ that.highlightFeature(e, layer, mapLayer);});
-                  markers.push( marker);
-              });
-          }
-      }*/
-
+      that.setStyle(layer);
       layer.on({
-        click: function (e) { that.highlightFeature(e, e.target, mapLayer); }
+        click: function (e) { that.highlightFeature(e, layer, mapLayer); }
       });
     }
   }).addTo(that.map);
   that.featureFilter.setLayer(that.geojson);
 
-  /*markers.forEach(function(marker){
-      marker.addTo(that.map);
-  })*/
 }
 
 Map.prototype.highlightFeature = function (e, layer, mapLayer) {
   this.checkFeatureVisibility(e);
   this.infoPanel.show(layer.feature.properties, mapLayer.fieldNames);
 
-  if (this.selectedLayer) this.unhighlightFeature(this.selectedLayer, this.selectedLayerInitStyle);
+  if (this.selectedLayer) {
+    this.unhighlightFeature(this.selectedLayer);
+  }
 
   this.selectedLayer = layer;
-  this.selectedLayerInitStyle = mapLayer.style;
-  this.selectedLayer.setStyle(mapLayer.hoverStyle);
+  this.setStyle(this.selectedLayer, true);
 }
 
-Map.prototype.unhighlightFeature = function (layer, style) {
-  layer.setStyle(style);
+Map.prototype.unhighlightFeature = function (layer) {
+  this.setStyle(layer);
+}
+
+Map.prototype.setStyle = function (layer, isHover) {
+  var styles = this.mapConfig.styles;
+  var feature = layer.feature;
+  var style;
+  for (var fry = 0; fry < styles.length; fry++) {
+    var styleConfig = styles[fry];
+    var propertyName = styleConfig.property;
+    var properties = feature.properties;
+    if (properties[propertyName] && properties[propertyName] === styleConfig.value) {
+      style = styleConfig[isHover ? 'hoverStyle' : 'style'];
+      break;
+    }
+  }
+  if (style) {
+    layer.setStyle(style);
+  }
 }
 
 Map.prototype.checkFeatureVisibility = function (e) {
