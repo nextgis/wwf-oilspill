@@ -137,7 +137,7 @@ Map.prototype.getFieldNameAlias = function (item, mapLayer) {
   for (var fry = 0; fry < fieldNames.length; fry++) {
     var fieldNameAlias = fieldNames[fry];
     if (item.keyname === fieldNameAlias.keyname) {
-      return fieldNameAlias;
+      return fieldNameAlias.display_name;
     }
   }
   return '';
