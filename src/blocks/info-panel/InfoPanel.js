@@ -67,7 +67,7 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
     var btn = $(this.container).find('#get-details-info-btn');
     $(btn).on('click', function (e) {
       e.preventDefault();
-      var win = window.open(template(mapLayer.detailUrl, {id: feature.id}), '_blank');
+      var win = window.open(template(mapLayer.detailUrl, {id: feature.properties[mapLayer.idField]}), '_blank');
       win.focus();
     });
 

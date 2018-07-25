@@ -11,11 +11,18 @@
   }
 }(this, function () {
 
-  var loadJSONP = function (theUrl, callback) {
+  var loadJSON = function (theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-        callback(xmlHttp.responseText);
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        if (xmlHttp.responseText) {
+          try {
+            callback(JSON.parse(xmlHttp.responseText));
+          } catch (er) {
+            throw new Error(er);
+          }
+        }
+      }
     }
     xmlHttp.open('GET', theUrl, true); // true for asynchronous
     xmlHttp.send(null);
@@ -90,7 +97,7 @@
   }
 
   NgwConnector.prototype._getJson = function (url, callback, context) {
-    return loadJSONP(url, callback, context);
+    return loadJSON(url, callback, context);
   }
 
   return NgwConnector;
