@@ -101,7 +101,7 @@ Map.prototype._onGeojsonLoad = function (data, mapLayer) {
       layer.on({
         click: function (e) { that.highlightFeature(e, layer, mapLayer); }
       });
-      that.setFeatureLayerPopup(feature, layer, mapLayer);
+      // that.setFeatureLayerPopup(feature, layer, mapLayer);
     }
   }).addTo(that.map);
   that.featureFilter.setLayer(that.geojson);
