@@ -39,6 +39,7 @@ Map.prototype.renderMap = function () {
 
   // add custom tools
   that.authorLogo = new AuthorLogo({ elem: document.getElementById('author-logo') }).addTo(that.map);
+  that.wwfLogo = new AuthorLogo({ elem: document.getElementById('wwf-logo'), position: 'bottomleft' }).addTo(that.map);
 
   // add Legend
   that.legend = new Legend({ styles: that.mapConfig.styles }).addTo(that.map);
