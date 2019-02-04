@@ -1,4 +1,3 @@
-var webpack = require('webpack');
 var helpers = require('./helpers');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,7 +7,7 @@ module.exports = (env, argv) => {
   return {
     mode: 'development',
 
-    devtool: argv.mode === 'production' ? 'none' : '#eval-source-map',
+    devtool: argv.mode === 'production' ? 'none' : 'source-map', // #eval-source-map',
 
     entry: {
       // "vendor": ["babel-polyfill", "./common/polyfill.js", "./common/vendor.js",],
@@ -40,24 +39,16 @@ module.exports = (env, argv) => {
             fix: true
           }
         },
-        // {
-        //     test: /\.js$/,
-        //     exclude: /(node_modules|bower_components)/,
-        //     use: [{
-        //         loader: "babel-loader",
-        //         options: {
-        //             cacheDirectory: true,
-        //             presets: [
-        //                 "@babel/preset-env",
-        //             ],
-        //             plugins: [
-        //                 "@babel/plugin-syntax-dynamic-import",
-        //                 "@babel/plugin-proposal-class-properties",
-        //                 "@babel/plugin-proposal-object-rest-spread"
-        //             ]
-        //         }
-        //     }]
-        // },
+        {
+          test: /\.m?js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        },
         {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({

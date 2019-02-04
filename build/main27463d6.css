@@ -1,8 +1,32 @@
 /* Filter-list */
-.feature-filter {
+.filter-wrapper {
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 3px 7px rgba(2, 34, 60, 0.08); }
+
+.filter-wrapper .btn.toggle-filter {
+  margin: 0; }
+
+.hide-filter {
+  background-color: transparent !important;
+  background: transparent;
+  color: #404040 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: underline !important;
+  cursor: pointer; }
+
+.hide-filter:hover {
+  color: #000 !important; }
+
+.filter-controls {
+  margin-left: auto;
+  margin-right: auto;
+  width: 145px; }
+
+.filter-controls button {
+  display: inline-block;
+  margin-left: 10px; }
 
 .filter-list {
   font-size: 13px;

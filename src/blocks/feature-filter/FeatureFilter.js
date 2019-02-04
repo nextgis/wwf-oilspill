@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import {PropFilter} from './PropFilter';
+import { PropFilter } from './PropFilter';
 
 import './FeatureFilter.scss';
 
@@ -8,7 +8,9 @@ export var FeatureFilter = L.Control.extend({
   options: {
     position: 'bottomleft',
     filters: [],
-    resetButtonName: 'Сбросить'
+    resetButtonName: 'Сбросить',
+    showFilterBtnName: 'Показать фильтр',
+    isOpen: false
   },
 
   _filters: [
@@ -28,13 +30,15 @@ export var FeatureFilter = L.Control.extend({
 
   onAdd: function (map) {
     this.map = map;
-    var container = L.DomUtil.create('div', 'feature-filter');
+    var container = this._createContainer();
+    this._toggleFilterContainer(this.options.isOpen);
     return container;
   },
 
   setLayer: function (layer) {
     this.layer = layer;
-    var container = this.getContainer();
+    // var container = this.getContainer();
+    var container = this._featureContainer;
     for (var fry = 0; fry < this.options.filters.length; fry++) {
       var filterConfig = this.options.filters[fry];
       if (filterConfig) {
@@ -51,7 +55,12 @@ export var FeatureFilter = L.Control.extend({
         container.appendChild(filter.getContainer());
       }
     }
-    container.appendChild(this._createResetButton());
+
+    const controls =  L.DomUtil.create('div', 'filter-controls', container);
+
+    const toggleFilterBtn = this._createToggleFilterBtn('скрыть', 'hide-filter');
+    controls.appendChild(toggleFilterBtn)
+    controls.appendChild(this._createResetButton());
     this.update();
   },
 
@@ -65,7 +74,42 @@ export var FeatureFilter = L.Control.extend({
     }
   },
 
-  _onFilterChange() {
+  _createContainer: function () {
+    const wrapper = L.DomUtil.create('div', 'filter-wrapper');
+
+    this._featureContainer = L.DomUtil.create('div', 'feature-filter', wrapper);
+
+    this._openFilterBtn = this._createToggleFilterBtn();
+    wrapper.appendChild(this._openFilterBtn);
+
+    return wrapper;
+  },
+
+  _toggleFilterContainer: function (status) {
+    this.options.isOpen = status !== undefined ? status : !this.options.isOpen;
+    if (this.options.isOpen) {
+      this._featureContainer.style.display = 'block';
+      this._openFilterBtn.style.display = 'none';
+    } else {
+      this._featureContainer.style.display = 'none';
+      this._openFilterBtn.style.display = 'block';
+    }
+  },
+
+  _createToggleFilterBtn: function (text, addClass) {
+
+    const btn = document.createElement('button');
+    btn.className = 'btn toggle-filter' + (addClass ? ' ' + addClass : '');
+    btn.innerHTML = text || this.options.showFilterBtnName;
+
+    btn.onclick = () => {
+      this._toggleFilterContainer();
+    }
+
+    return btn;
+  },
+
+  _onFilterChange: function () {
     var that = this;
     var filteredFeatures = [];
     this.layer.eachLayer(function (layer) {
