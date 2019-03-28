@@ -51,12 +51,30 @@
       "minOffsetRight": 460,
       "layers": [{
         "name": "oilgas_es_pt",
-        "id": 182,
+        "id": 185,
         "popupFields": ["answer"],
         "idField": "idrec",
         "detailUrl": "../../oilspill-docs/{id}.pdf"
         // "detailUrl": "http://nextgis.ru/share/{id}.pdf"
       }],
+      "defaultStyle": {
+        radius: 5,
+        fillOpacity: 1,
+        weight: 2,
+        color: "#ffffff",
+        fillColor: "#ffffff",
+        opacity: .6,
+        fillRule: "nonzero"
+      },
+      "defaultHoverStyle": {
+        radius: 7,
+        fillOpacity: 1,
+        weight: 4,
+        color: "#ffffff",
+        fillColor: "#ffffff",
+        opacity: .4,
+        fillRule: "nonzero"
+      },
       "styles": [{
           property: "type",
           label: "спорные ситуации",
@@ -99,6 +117,29 @@
             weight: 4,
             color: "#ffffff",
             fillColor: "#c30b0b",
+            opacity: .4,
+            fillRule: "nonzero"
+          }
+        },
+        {
+          property: "type",
+          label: "инцидент",
+          value: "инцидент",
+          "style": {
+            radius: 5,
+            fillOpacity: 1,
+            weight: 2,
+            color: "#ffffff",
+            fillColor: "#2F4F4F",
+            opacity: .6,
+            fillRule: "nonzero"
+          },
+          "hoverStyle": {
+            radius: 7,
+            fillOpacity: 1,
+            weight: 4,
+            color: "#ffffff",
+            fillColor: "#000000",
             opacity: .4,
             fillRule: "nonzero"
           }

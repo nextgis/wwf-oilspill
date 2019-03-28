@@ -173,9 +173,11 @@ Map.prototype.setStyle = function (layer, isHover) {
       break;
     }
   }
-  if (style) {
-    layer.setStyle(style);
+
+  if (!style) {
+    style = isHover ? this.mapConfig.defaultHoverStyle : this.mapConfig.defaultStyle;
   }
+  layer.setStyle(style);
 }
 
 Map.prototype.checkFeatureVisibility = function (e) {
