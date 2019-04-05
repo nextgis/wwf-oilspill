@@ -36,21 +36,23 @@ export var Legend = L.Control.Legend = L.Control.extend({
   },
 
   _createStyleBlock: function (style) {
-    var listItem = document.createElement('li');
-    listItem.className = 'legend-list__item ';
+    if (style.label) {
+      var listItem = document.createElement('li');
+      listItem.className = 'legend-list__item ';
 
-    var icon = document.createElement('div');
-    icon.className = 'legend-list__icon legend-list__icon--point';
-    icon.style.backgroundColor = style.style.fillColor;
+      var icon = document.createElement('div');
+      icon.className = 'legend-list__icon legend-list__icon--point';
+      icon.style.backgroundColor = style.style.fillColor;
 
-    var text = document.createElement('div');
-    text.className = 'legend-list__text';
-    text.innerHTML = style.label;
+      var text = document.createElement('div');
+      text.className = 'legend-list__text';
+      text.innerHTML = style.label;
 
-    listItem.appendChild(icon);
-    listItem.appendChild(text);
+      listItem.appendChild(icon);
+      listItem.appendChild(text);
 
-    return listItem;
+      return listItem;
+    }
   }
 });
 
