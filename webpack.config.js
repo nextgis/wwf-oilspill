@@ -1,5 +1,5 @@
 var helpers = require('./helpers');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => {
@@ -50,40 +50,18 @@ module.exports = (env, argv) => {
           }
         },
         {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [{ loader: 'css-loader', options: { sourceMap: true } }],
-            publicPath: './',
-          })
-        },
-        {
-          test: /\.(scss)$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            publicPath: './',
-            use: [
-              {
-                loader: 'css-loader', options: { sourceMap: true }// translates CSS into CommonJS modules
+          test: /\.(sa|sc|c)ss$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: './',
               },
-              {
-                loader: 'postcss-loader', // Run post css actions
-                options: {
-                  sourceMap: true,
-                  plugins: function () { // post css plugins, can be exported to postcss.config.js
-                    return [
-                      require('precss'),
-                      require('autoprefixer'),
-                    ];
-                  }
-                }
-              },
-              {
-                loader: 'sass-loader', // compiles Sass to CSS
-                options: { sourceMap: true }
-              }
-            ]
-          })
+            },
+            'css-loader',
+            // 'postcss-loader',
+            'sass-loader',
+          ],
         },
         {
           test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -105,7 +83,7 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
-      new ExtractTextPlugin({ filename: '[name][hash:7].css', allChunks: true }),
+      new MiniCssExtractPlugin({ filename: '[name][hash:7].css', allChunks: true }),
       new HtmlWebpackPlugin({ template: 'src/index.html' })
     ]
   }
