@@ -4,7 +4,7 @@ export var BaseFilter = L.Evented.extend({
 
   options: {
     label: 'filter',
-    empty: {name: 'Все', value: '*'},
+    empty: { name: 'Все', value: '*' },
     allovedEmpty: true
   },
 
@@ -38,17 +38,19 @@ export var BaseFilter = L.Evented.extend({
       }
     }
 
-
     var filterData = this.getFilterData(layer);
     if (this.options.allovedEmpty) {
       var empty = this.options.empty;
       this._addChoice(empty.name, empty.value);
     }
-    for (var f in filterData) {
-      if (filterData.hasOwnProperty(f)) {
-        var data = filterData[f];
-        this._addChoice(f, f, data);
+    var sortedData = Object.keys(filterData).sort(function (a, b) {
+      if (typeof a === 'string' && typeof b === 'string') {
+        return a.toLowerCase() > b.toLowerCase();
       }
+    });
+    for (var f = 0; f < sortedData.length; f++) {
+      var name = sortedData[f];
+      this._addChoice(name, name, filterData[name]);
     }
   },
 
@@ -104,7 +106,7 @@ export var BaseFilter = L.Evented.extend({
   _onSelectChange: function (e) {
     var value = e.target.value;
     this.value = value;
-    this.fire('change', {value: value});
+    this.fire('change', { value: value });
   },
 
   _addEventsListeners: function () {

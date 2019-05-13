@@ -53,7 +53,6 @@ Map.prototype.renderMap = function () {
     ]
   }).addTo(that.map);
 
-
   // add Info panel
   that.infoPanel = new InfoPanel().addTo(that.map);
   $(that.infoPanel.closer).on('click', function () {
