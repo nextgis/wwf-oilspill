@@ -32,6 +32,7 @@ export var FeatureFilter = L.Control.extend({
     this.map = map;
     var container = this._createContainer();
     this._toggleFilterContainer(this.options.isOpen);
+    L.DomEvent.disableClickPropagation(container);
     return container;
   },
 
@@ -111,38 +112,30 @@ export var FeatureFilter = L.Control.extend({
 
   _onFilterChange: function () {
     var that = this;
-    var filteredFeatures = [];
+    var filteredLayers = [];
     this.layer.eachLayer(function (layer) {
       var checked = false;
-      var newFeature = JSON.parse(JSON.stringify(layer.feature));
+      // var newFeature = JSON.parse(JSON.stringify(layer.feature));
       for (var fry = 0; fry < that._filters.length; fry++) {
         var _filter = that._filters[fry];
         var filter = _filter.filter;
         checked = filter.check(layer);
         if (!checked) {
           break;
-          // if (data.filter === filter) {
-          //   newFeature.properties = {};
-          //   newFeature.properties[_filter.propName] = layer.feature.properties[_filter.propName];
-          // }
         }
       }
-
       if (checked) {
-        filteredFeatures.push(newFeature);
+        filteredLayers.push(layer);
         layer.getElement().style.display = 'block';
       } else {
         layer.getElement().style.display = 'none';
       }
-
     });
-
-
-
-    // var newLayer = L.geoJSON({type: 'FeatureCollection', features: filteredFeatures});
+    if (that.options.onChange) {
+      that.options.onChange(filteredLayers);
+    }
     for (var f = 0; f < this._filters.length; f++) {
       var filter = this._filters[f].filter;
-      // filter.layer = newLayer;
       filter.update();
     }
   },

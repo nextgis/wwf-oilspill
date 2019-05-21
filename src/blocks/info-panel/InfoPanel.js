@@ -39,6 +39,7 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
     })
 
     L.DomEvent.disableScrollPropagation(this.container);
+    L.DomEvent.disableClickPropagation(this.container);
     return this.container;
   },
   show: function (feature, fieldNames, mapLayer) {

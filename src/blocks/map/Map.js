@@ -47,10 +47,11 @@ Map.prototype.renderMap = function () {
   // add Filter-list
   that.featureFilter = new FeatureFilter({
     filters: [
-      {type: 'prop', propName: 'name', label: 'Компания'},
-      {type: 'prop', propName: 'date', label: 'Квартал'},
-      {type: 'prop', propName: 'region', label: 'Регион'},
-    ]
+      { type: 'prop', propName: 'name', label: 'Компания' },
+      { type: 'prop', propName: 'date', label: 'Квартал' },
+      { type: 'prop', propName: 'region', label: 'Регион' },
+    ],
+    onChange: function (layers) { that._zoomToFeatures(layers); }
   }).addTo(that.map);
 
   // add Info panel
@@ -115,7 +116,7 @@ Map.prototype.setFeatureLayerPopup = function (feature, layer, mapLayer) {
     var keyname = popupFieldsConfig[fry];
     var toPopup = feature.properties && feature.properties[keyname];
     if (toPopup) {
-      popupFields.push({keyname: keyname, value: toPopup});
+      popupFields.push({ keyname: keyname, value: toPopup });
     }
   }
   if (popupFields.length) {
@@ -198,4 +199,12 @@ Map.prototype.checkFeatureVisibility = function (e) {
 
 Map.prototype.goHome = function () {
   this.map.setView(this.mapConfig.center, this.mapConfig.zoom);
+}
+
+Map.prototype._zoomToFeatures = function (layers) {
+  if (layers && layers.length) {
+    var layer = new L.FeatureGroup(layers);
+    var bounds = layer.getBounds();
+    this.map.fitBounds(bounds, { maxZoom: 13 });
+  }
 }
