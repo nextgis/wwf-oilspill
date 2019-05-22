@@ -22,10 +22,7 @@ module.exports = (env, argv) => {
     },
 
     resolve: {
-      extensions: ['.js', '.json'],
-      alias: {
-        handlebars: 'handlebars/dist/handlebars.min.js'
-      }
+      extensions: ['.js', '.json']
     },
 
     module: {

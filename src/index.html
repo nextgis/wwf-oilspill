@@ -18,27 +18,6 @@
     <img src="images/WWF-logo.png" alt="wwf">
   </a>
 
-  <!-- Handlebars templates -->
-  <script id="info-panel-template" type="text/x-handlebars-template">
-    {{#if title}}
-    <div class="info-panel__title">
-      {{#if link}}
-      <a href="{{link}}" class="info-panel__link" target="_blank">{{title}}</a>
-      {{else}} {{title}} {{/if}}
-    </div>
-    {{/if}} {{#if location}}
-    <div class="info-panel__location">{{location}}</div>{{/if}} {{#if status}}
-    <div class="info-panel__status">{{status}}</div>{{/if}} {{#each properties}}
-    <div class="info-panel__item">
-      <div class="info-panel__item-title">{{@key}}</div>
-      {{{this}}}
-    </div>
-    {{/each}}
-    {{#if title}}
-    <button class="btn" id="get-details-info-btn">Подробнее</button>
-    {{/if}}
-  </script>
-
   <script>
     var mapConfig = {
       "nextgiscomUrl": "https://barents-kara-xprojects.nextgis.com",

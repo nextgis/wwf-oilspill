@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import L from 'leaflet';
 import LProj from 'proj4leaflet';
 import { InfoPanel } from '../info-panel/InfoPanel';
@@ -56,7 +55,7 @@ Map.prototype.renderMap = function () {
 
   // add Info panel
   that.infoPanel = new InfoPanel().addTo(that.map);
-  $(that.infoPanel.closer).on('click', function () {
+  L.DomEvent.on(that.infoPanel.closer, 'click', function () {
     that.unhighlightFeature(that.selectedLayer, that.selectedLayerInitStyle);
   });
 
