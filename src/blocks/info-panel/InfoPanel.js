@@ -63,7 +63,7 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
     infoPanel.innerHTML = '';
     infoPanel.appendChild(html);
 
-    var btn = document.getElementsByClassName('btn');
+    var btn = document.getElementsByClassName('btn')[0];
     L.DomEvent.on(btn, 'click', function (e) {
       e.preventDefault();
       var url = template(mapLayer.detailUrl, { id: feature.properties[mapLayer.idField] });
