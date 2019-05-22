@@ -31,7 +31,6 @@ export var FeatureFilter = L.Control.extend({
   onAdd: function (map) {
     this.map = map;
 
-
     var container = this._createContainer();
 
     this._toggleFilterContainer(this.options.isOpen);
@@ -207,7 +206,7 @@ export var FeatureFilter = L.Control.extend({
     this.filtered.innerHTML = '';
     if (this.filteredCount !== this.featuresCount) {
       var elem = document.createElement('div');
-      elem.innerHTML = '<span>Отфильтровано: </span><span>' + this.filteredCount + '</span> ' +
+      elem.innerHTML = '<span>Выбрано: </span><span>' + this.filteredCount + '</span> ' +
         '<span><a class="material-icons clean-filter-ico" href="#" title="Сбросить фильтр">not_interested</a></span>';
       var cleanBtn = elem.getElementsByClassName('clean-filter-ico')[0];
       cleanBtn.onclick = () => {
