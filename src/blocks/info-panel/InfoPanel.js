@@ -17,10 +17,9 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
 
     this.container = L.DomUtil.create('div', 'info-panel'),
     this.closer = L.DomUtil.create('a', 'info-panel__close material-icons', this.container),
-    this.inner = L.DomUtil.create('div', 'info-panel__inner', this.container);
-
     this.closer.innerHTML = 'close';
     this.closer.setAttribute('href', '#');
+    this.inner = L.DomUtil.create('div', 'info-panel__inner', this.container);
 
     L.DomEvent.on(this.closer, 'click', function (e) {
       e.preventDefault();
@@ -58,14 +57,6 @@ export var InfoPanel = L.Control.InfoPanel = L.Control.extend({
       }
     }
 
-
-    // html = this._createHtml({
-    //   title: props.name,
-    //   link: props.link,
-    //   location: props.location,
-    //   status: props.startdate,
-    //   properties: propsAliased
-    // });
     html = this._createHtml(props, propsAliased);
 
     var infoPanel = this.container.getElementsByClassName('info-panel__inner')[0];

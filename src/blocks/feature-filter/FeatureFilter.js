@@ -30,7 +30,10 @@ export var FeatureFilter = L.Control.extend({
 
   onAdd: function (map) {
     this.map = map;
+
+
     var container = this._createContainer();
+
     this._toggleFilterContainer(this.options.isOpen);
     L.DomEvent.disableClickPropagation(container);
     return container;
@@ -59,9 +62,8 @@ export var FeatureFilter = L.Control.extend({
 
     const controls =  L.DomUtil.create('div', 'filter-controls', container);
 
-    const toggleFilterBtn = this._createToggleFilterBtn('скрыть', 'hide-filter');
-    controls.appendChild(toggleFilterBtn)
-    controls.appendChild(this._createResetButton());
+    controls.appendChild(this._createFilterControl());
+
     this.update();
   },
 
@@ -75,8 +77,24 @@ export var FeatureFilter = L.Control.extend({
     }
   },
 
+  clean: function () {
+    for (var fry = 0; fry < this._filters.length; fry++) {
+      var _filter = this._filters[fry];
+      var filter = _filter.filter;
+      filter._setDefaultValue();
+    }
+    this._onFilterChange();
+  },
+
   _createContainer: function () {
     const wrapper = L.DomUtil.create('div', 'filter-wrapper');
+
+    this.closer = L.DomUtil.create('a', 'info-panel__close material-icons', wrapper),
+    this.closer.innerHTML = 'close';
+    this.closer.setAttribute('href', '#');
+    this.closer.onclick = () => {
+      this._toggleFilterContainer();
+    }
 
     this._featureContainer = L.DomUtil.create('div', 'feature-filter', wrapper);
 
@@ -106,7 +124,6 @@ export var FeatureFilter = L.Control.extend({
     btn.onclick = () => {
       this._toggleFilterContainer();
     }
-
     return btn;
   },
 
@@ -115,7 +132,6 @@ export var FeatureFilter = L.Control.extend({
     var filteredLayers = [];
     this.layer.eachLayer(function (layer) {
       var checked = false;
-      // var newFeature = JSON.parse(JSON.stringify(layer.feature));
       for (var fry = 0; fry < that._filters.length; fry++) {
         var _filter = that._filters[fry];
         var filter = _filter.filter;
@@ -138,6 +154,8 @@ export var FeatureFilter = L.Control.extend({
       var filter = this._filters[f].filter;
       filter.update();
     }
+    this.filteredCount = filteredLayers.length;
+    this._updateFilterControl();
   },
 
   _addPropFilter: function (options) {
@@ -158,13 +176,44 @@ export var FeatureFilter = L.Control.extend({
     this.resetButton.className = 'btn';
     this.resetButton.innerHTML = this.options.resetButtonName;
     L.DomEvent.on(this.resetButton, 'click', function () {
-      for (var fry = 0; fry < that._filters.length; fry++) {
-        var _filter = that._filters[fry];
-        var filter = _filter.filter;
-        filter._setDefaultValue();
-      }
-      that._onFilterChange();
+      that.clean();
     })
     return this.resetButton;
+  },
+
+  _createFilterControl: function () {
+    var wrap = document.createElement('div');
+    var whole = document.createElement('div');
+    whole.className = 'filter-control__whole';
+    this.whole = whole;
+    this._updateWholeControl();
+    wrap.appendChild(whole);
+
+    this.filtered = document.createElement('div');
+    this.filtered.className = 'filter-control__filtered';
+    wrap.appendChild(this.filtered);
+    this._updateFilterControl();
+
+    return wrap;
+  },
+
+  _updateWholeControl: function () {
+    this.featuresCount = this.layer.getLayers().length;
+    this.filteredCount = this.featuresCount;
+    this.whole.innerHTML = 'Всего: ' + (this.featuresCount ? this.featuresCount : '0');
+  },
+
+  _updateFilterControl: function () {
+    this.filtered.innerHTML = '';
+    if (this.filteredCount !== this.featuresCount) {
+      var elem = document.createElement('div');
+      elem.innerHTML = '<span>Отфильтровано: </span><span>' + this.filteredCount + '</span> ' +
+        '<span><a class="material-icons clean-filter-ico" href="#" title="Сбросить фильтр">not_interested</a></span>';
+      var cleanBtn = elem.getElementsByClassName('clean-filter-ico')[0];
+      cleanBtn.onclick = () => {
+        this.clean();
+      }
+      this.filtered.appendChild(elem);
+    }
   }
 });

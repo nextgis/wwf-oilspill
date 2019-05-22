@@ -43,11 +43,7 @@ export var BaseFilter = L.Evented.extend({
       var empty = this.options.empty;
       this._addChoice(empty.name, empty.value);
     }
-    var sortedData = Object.keys(filterData).sort(function (a, b) {
-      if (typeof a === 'string' && typeof b === 'string') {
-        return a.toLowerCase() > b.toLowerCase();
-      }
-    });
+    var sortedData = Object.keys(filterData).sort();
     for (var f = 0; f < sortedData.length; f++) {
       var name = sortedData[f];
       this._addChoice(name, name, filterData[name]);

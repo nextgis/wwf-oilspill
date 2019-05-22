@@ -7,7 +7,7 @@
 }
 
 .feature-filter {
-
+	padding-top: 15px;
 }
 
 .filter-wrapper .btn.toggle-filter {
@@ -30,14 +30,36 @@
 }
 
 .filter-controls {
-	margin-left: auto;
-	margin-right: auto;
-	width: 145px; // TODO: make relevant value here
+	line-height: 20px;
+	padding: 10px 15px;
+	// margin-left: auto;
+	// margin-right: auto;
+	// width: 145px; // TODO: make relevant value here
 }
 
 .filter-controls button {
 	display: inline-block;
 	margin-left: 10px;
+}
+
+.filter-control__whole, .filter-control__filtered {
+	display: inline-block;
+}
+
+.filter-control__whole {
+
+}
+
+.clean-filter-ico {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	color: red !important;
+}
+
+.filter-control__filtered {
+	float: right;
 }
 
 .filter-list{
