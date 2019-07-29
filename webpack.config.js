@@ -2,8 +2,15 @@ var helpers = require('./helpers');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = (env, argv) => {
+let alias = {};
+try {
+  const { getAliases } = require('./nextgisweb_frontend/build/aliases');
+  alias = getAliases();
+} catch (er) {
+  // ignore
+}
 
+module.exports = (env, argv) => {
   return {
     mode: 'development',
 
@@ -11,30 +18,34 @@ module.exports = (env, argv) => {
 
     entry: {
       // "vendor": ["babel-polyfill", "./common/polyfill.js", "./common/vendor.js",],
-      'main': [
-        './src/main.js'
-      ],
+      main: ['./src/main.ts']
     },
 
     output: {
       path: helpers.root('build'),
-      filename: '[name][hash:7].js',
+      filename: '[name][hash:7].js'
     },
 
     resolve: {
-      extensions: ['.js', '.json']
+      extensions: ['.ts', '.js', '.json'],
+      alias
     },
 
     module: {
       rules: [
+        // {
+        //   enforce: 'pre',
+        //   test: /\.(t|j)sx?$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /node_modules/,
+        //   options: {
+        //     fix: true
+        //   }
+        // },
         {
-          enforce: 'pre',
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'eslint-loader',
-          options: {
-            fix: true
-          }
+          test: /\.tsx?$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/
         },
         {
           test: /\.m?js$/,
@@ -52,13 +63,15 @@ module.exports = (env, argv) => {
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                publicPath: './',
-              },
+                publicPath: './'
+              }
             },
             'css-loader',
             // 'postcss-loader',
-            'sass-loader',
-          ],
+            {
+              loader: 'sass-loader'
+            }
+          ]
         },
         {
           test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -71,10 +84,7 @@ module.exports = (env, argv) => {
         { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: ['file-loader?name=fonts/[name]-[hash:7].[ext]'] },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
-          use: [
-            'file-loader?name=images/[name].[ext]',
-            'image-webpack-loader?bypassOnDebug'
-          ]
+          use: ['file-loader?name=images/[name].[ext]', 'image-webpack-loader?bypassOnDebug']
         }
       ]
     },
@@ -83,5 +93,5 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({ filename: '[name][hash:7].css', allChunks: true }),
       new HtmlWebpackPlugin({ template: 'src/index.html' })
     ]
-  }
+  };
 };
