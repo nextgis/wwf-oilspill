@@ -1,8 +1,8 @@
 /* Author-logo */
 .leaflet-container .leaflet-bottom .author-logo,
-.leaflet-touch .leaflet-bottom .author-logo{
-    margin-bottom: 6px;
-    margin-right: 6px;
+.leaflet-touch .leaflet-bottom .author-logo {
+	margin-bottom: 6px;
+	margin-right: 6px;
 }
 
 .author-logo {
@@ -10,15 +10,15 @@
 }
 
 .nextgis-logo {
-	background: url('../images/nextgis.png')
+	background: url("../images/nextgis.png");
 }
 
 .wwf-logo {
 	position: absolute;
-	background: url('../images/WWF-logo.png') no-repeat;
+	background: url("../images/WWF-logo.png") no-repeat;
 	/* left: 200px; */
 	left: 260px;
+	margin-left: 10px;
 	margin-bottom: 20px;
 	bottom: 0;
 }
-

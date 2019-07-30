@@ -1,4 +1,4 @@
-import { NgwMapOptions as NMO, NgwLayerOptions, VectorAdapterLayerPaint, Paint } from '@nextgis/ngw-map';
+import { NgwMapOptions as NMO, NgwLayerOptions, VectorAdapterLayerPaint, Paint, CirclePaint } from '@nextgis/ngw-map';
 import { Feature } from 'geojson';
 
 export interface ResourceMeta {
@@ -7,8 +7,10 @@ export interface ResourceMeta {
   detailUrl: string;
 }
 
+export type Resource = NgwLayerOptions<'GEOJSON', ResourceMeta>;
+
 export interface NgwMapOptions extends NMO {
-  resources: Array<NgwLayerOptions<'GEOJSON', ResourceMeta>>;
+  resources: Resource[];
 }
 
 export interface MapOptions {
@@ -25,11 +27,11 @@ export interface Styles {
   property: string;
   label: string;
   value: string;
-  style: Paint;
-  hoverStyle: Paint;
+  style: CirclePaint;
+  hoverStyle: CirclePaint;
 }
 
-const styles: Styles[] = [
+export const styles: Styles[] = [
   {
     property: 'type',
     label: 'спорные ситуации',
@@ -88,22 +90,33 @@ const styles: Styles[] = [
   // }
 ];
 
-function paint(feature: Feature, opt: { selected: boolean } = { selected: false }): VectorAdapterLayerPaint {
-  const p = {
-    radius: opt.selected ? 7 : 5,
+export const defPaint = (selected: boolean): VectorAdapterLayerPaint => {
+  return {
+    radius: selected ? 7 : 5,
     fillOpacity: 1,
-    weight: opt.selected ? 4 : 2,
+    weight: selected ? 4 : 2,
     fillColor: '#ffffff',
     strokeColor: '#ffffff',
     strokeOpacity: 0.6,
     stroke: true
   };
-  const style = styles.find(x => feature.properties[x.property] === x.value);
+};
+
+export function createPaint(
+  properties: Record<string, unknown>,
+  opt: { selected: boolean } = { selected: false }
+): VectorAdapterLayerPaint {
+  const p = defPaint(opt.selected);
+  const style = styles.find(x => properties[x.property] === x.value);
   if (style) {
     const s = opt.selected ? style.hoverStyle : style.style;
     return { ...p, ...s };
   }
   return p;
+}
+
+function paint(feature: Feature, opt: { selected: boolean } = { selected: false }): VectorAdapterLayerPaint {
+  return createPaint(feature.properties, opt);
 }
 
 export const mapOptions: MapOptions = {
@@ -123,6 +136,7 @@ export const mapOptions: MapOptions = {
         },
         adapterOptions: {
           selectable: true,
+          unselectOnSecondClick: true,
           paint: f => paint(f),
           selectedPaint: f => paint(f, { selected: true })
         }
