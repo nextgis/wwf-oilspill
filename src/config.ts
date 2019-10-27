@@ -1,4 +1,10 @@
-import { NgwMapOptions as NMO, NgwLayerOptions, VectorAdapterLayerPaint, Paint, CirclePaint } from '@nextgis/ngw-map';
+import {
+  NgwMapOptions as NMO,
+  NgwLayerOptions,
+  VectorAdapterLayerPaint,
+  Paint,
+  CirclePaint
+} from '@nextgis/ngw-map';
 import { Feature } from 'geojson';
 
 export interface ResourceMeta {
@@ -115,7 +121,10 @@ export function createPaint(
   return p;
 }
 
-function paint(feature: Feature, opt: { selected: boolean } = { selected: false }): VectorAdapterLayerPaint {
+export function paint(
+  feature: Feature,
+  opt: { selected: boolean } = { selected: false }
+): VectorAdapterLayerPaint {
   return createPaint(feature.properties, opt);
 }
 
@@ -127,7 +136,7 @@ export const mapOptions: MapOptions = {
     resources: [
       {
         id: 'oilgas_es_pt',
-        resourceId: 190,
+        resourceId: 199,
         fit: true,
         meta: {
           popupFields: ['answer'],
@@ -145,7 +154,8 @@ export const mapOptions: MapOptions = {
   },
   basemap: {
     url: 'http://tiles.maps.sputnik.ru/tiles/kmt2/{z}/{x}/{y}.png',
-    attribution: "&copy; <a href=http://osm.org/copyright'>OpenStreetMap</a> contributors;Спутник &copy; Ростелеком"
+    attribution:
+      "&copy; <a href=http://osm.org/copyright'>OpenStreetMap</a> contributors;Спутник &copy; Ростелеком"
   },
   minOffsetRight: 460,
 

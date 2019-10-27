@@ -50,9 +50,8 @@ export class InfoPanel implements MapControl {
   show(feature: Feature, fieldNames: FeatureLayerField[], mapLayer: Resource) {
     const props = feature.properties;
     const propsAliased = {};
-    let html;
 
-    for (let key in props) {
+    for (const key in props) {
       const value = props[key];
       let apiField;
       for (let fry = 0; fry < fieldNames.length; fry++) {
@@ -62,13 +61,20 @@ export class InfoPanel implements MapControl {
         }
       }
       if (apiField) {
-        if (key != 'name' && key != 'lat' && key != 'lon' && value && apiField && apiField.display_name) {
+        if (
+          key != 'name' &&
+          key != 'lat' &&
+          key != 'lon' &&
+          value &&
+          apiField &&
+          apiField.display_name
+        ) {
           propsAliased[apiField.display_name] = value;
         }
       }
     }
 
-    html = this._createHtml(props, propsAliased);
+    const html = this._createHtml(props, propsAliased);
 
     const infoPanel = this.inner;
     infoPanel.innerHTML = '';
@@ -77,7 +83,9 @@ export class InfoPanel implements MapControl {
     const btn = document.getElementsByClassName('btn')[0] as HTMLElement;
     L.DomEvent.on(btn, 'click', e => {
       e.preventDefault();
-      const url = template(mapLayer.meta.detailUrl, { id: feature.properties[mapLayer.meta.idField] });
+      const url = template(mapLayer.meta.detailUrl, {
+        id: feature.properties[mapLayer.meta.idField]
+      });
       const win = window.open(url, '_blank');
       win.focus();
     });
@@ -96,7 +104,10 @@ export class InfoPanel implements MapControl {
   }
   checkOverflowing() {
     setTimeout(() => {
-      if (this.inner.offsetHeight < this.inner.scrollHeight || this.inner.offsetWidth < this.inner.scrollWidth) {
+      if (
+        this.inner.offsetHeight < this.inner.scrollHeight ||
+        this.inner.offsetWidth < this.inner.scrollWidth
+      ) {
         const scrollWidth = this.inner.offsetWidth - this.inner.clientWidth;
         this.closer.style.right = scrollWidth + 5 + 'px';
       } else {
@@ -110,7 +121,11 @@ export class InfoPanel implements MapControl {
       const title = document.createElement('div');
       title.className = 'info-panel__title';
       title.innerHTML = prop.link
-        ? '<a href="' + prop.link + '" class="info-panel__link" target="_blank">' + prop.name + '</a>'
+        ? '<a href="' +
+          prop.link +
+          '" class="info-panel__link" target="_blank">' +
+          prop.name +
+          '</a>'
         : prop.name;
       wrap.appendChild(title);
     }

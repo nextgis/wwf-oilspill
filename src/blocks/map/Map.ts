@@ -53,8 +53,9 @@ export class Map {
       }),
       'top-left'
     );
-
-    this.ngwMap.addControl(this.ngwMap.createControl(this.authorLogo), 'bottom-right');
+    this.ngwMap.onLoad('controls:create').then(() => {
+      this.ngwMap.addControl(this.ngwMap.createControl(this.authorLogo), 'bottom-right');
+    });
     this.ngwMap.addControl(this.ngwMap.createControl(this.wwfLogo), 'bottom-left');
 
     // add Legend
@@ -72,7 +73,10 @@ export class Map {
         this._zoomToFeatures(layers);
       }
     });
-    this.ngwMap.addControl(this.ngwMap.createControl(this.featureFilter, { margin: true }), 'bottom-left');
+    this.ngwMap.addControl(
+      this.ngwMap.createControl(this.featureFilter, { margin: true }),
+      'bottom-left'
+    );
 
     for (const r of resources) {
       const resource = await this.ngwMap.addNgwLayer(r);
@@ -102,7 +106,10 @@ export class Map {
         this.unhighlightFeature();
       }
     });
-    this.ngwMap.addControl(this.ngwMap.createControl(this.infoPanel, { margin: true }), 'top-right');
+    this.ngwMap.addControl(
+      this.ngwMap.createControl(this.infoPanel, { margin: true }),
+      'top-right'
+    );
   }
 
   highlightFeature(e, feature: Feature, adapter: ResourceAdapter, mapLayer: Resource) {

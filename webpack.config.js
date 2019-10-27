@@ -18,7 +18,8 @@ module.exports = (env, argv) => {
 
     entry: {
       // "vendor": ["babel-polyfill", "./common/polyfill.js", "./common/vendor.js",],
-      main: ['./src/main.ts']
+      main: ['./src/main.ts'],
+      mine: ['./src/mine/main.ts']
     },
 
     output: {
@@ -75,13 +76,20 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-          use: ['url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name]-[hash:7].[ext]']
+          use: [
+            'url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name]-[hash:7].[ext]'
+          ]
         },
         {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          use: ['url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[name]-[hash:7].[ext]']
+          use: [
+            'url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[name]-[hash:7].[ext]'
+          ]
         },
-        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: ['file-loader?name=fonts/[name]-[hash:7].[ext]'] },
+        {
+          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+          use: ['file-loader?name=fonts/[name]-[hash:7].[ext]']
+        },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: ['file-loader?name=images/[name].[ext]', 'image-webpack-loader?bypassOnDebug']
@@ -91,7 +99,16 @@ module.exports = (env, argv) => {
 
     plugins: [
       new MiniCssExtractPlugin({ filename: '[name][hash:7].css', allChunks: true }),
-      new HtmlWebpackPlugin({ template: 'src/index.html' })
+      // new HtmlWebpackPlugin({ template: 'src/index.html' })
+      new HtmlWebpackPlugin({
+        chunks: ['main'],
+        template: 'src/index.html'
+      }),
+      new HtmlWebpackPlugin({
+        chunks: ['mine'],
+        template: 'src/mine/index.html',
+        filename: 'mine.html'
+      })
     ]
   };
 };
