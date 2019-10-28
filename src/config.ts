@@ -2,7 +2,6 @@ import {
   NgwMapOptions as NMO,
   NgwLayerOptions,
   VectorAdapterLayerPaint,
-  Paint,
   CirclePaint
 } from '@nextgis/ngw-map';
 import { Feature } from 'geojson';
@@ -147,7 +146,8 @@ export const mapOptions: MapOptions = {
           selectable: true,
           unselectOnSecondClick: true,
           paint: f => paint(f),
-          selectedPaint: f => paint(f, { selected: true })
+          selectedPaint: f => paint(f, { selected: true }),
+          propertiesFilter: [['delete', 'ne', 1]]
         }
       }
     ]
