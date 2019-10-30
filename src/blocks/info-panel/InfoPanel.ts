@@ -53,14 +53,14 @@ export class InfoPanel implements MapControl {
 
     for (const key in props) {
       const value = props[key];
-      let apiField;
+      let apiField: FeatureLayerField;
       for (let fry = 0; fry < fieldNames.length; fry++) {
         if (fieldNames[fry].keyname === key) {
           apiField = fieldNames[fry];
           break;
         }
       }
-      if (apiField) {
+      if (apiField && apiField.grid_visibility) {
         if (
           key != 'name' &&
           key != 'lat' &&
