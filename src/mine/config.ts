@@ -19,7 +19,8 @@ export const mapOptions: MapOptions = {
           selectable: true,
           unselectOnSecondClick: true,
           paint: f => paint(f),
-          selectedPaint: f => paint(f, { selected: true })
+          selectedPaint: f => paint(f, { selected: true }),
+          propertiesFilter: [['delete', 'ne', 1]]
         }
       }
     ]
