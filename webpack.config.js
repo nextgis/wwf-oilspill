@@ -9,7 +9,7 @@ try {
   const { getAliases } = require('./@nextgis/scripts/aliases');
   alias = getAliases();
 } catch (er) {
-  throw new Error();
+  // throw new Error();
 }
 
 // const cssLoader = {
@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
     },
 
     output: {
-      path: helpers.root('build'),
+      // path: helpers.root('build'),
       filename: '[name][hash:7].js',
       publicPath: './',
     },

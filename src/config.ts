@@ -132,7 +132,7 @@ export const mapOptions: MapOptions = {
     resources: [
       {
         id: 'oilgas_es_pt',
-        resourceId: 199,
+        resource: 199,
         fit: true,
         meta: {
           popupFields: ['answer'],

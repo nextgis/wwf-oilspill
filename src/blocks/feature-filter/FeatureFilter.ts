@@ -63,7 +63,7 @@ export class FeatureFilter implements MapControl {
     }
   }
 
-  onAdd() {
+  onAdd(): HTMLElement {
     const container = this._createContainer();
 
     this._toggleFilterContainer(this.options.isOpen);
@@ -71,11 +71,11 @@ export class FeatureFilter implements MapControl {
     return container;
   }
 
-  onRemove() {
+  onRemove(): void {
     // ignore
   }
 
-  setLayer(layer: LayerDef) {
+  setLayer(layer: LayerDef): void {
     this._layer = this.ngwMap.getLayer(layer) as ResourceAdapter;
     // const container = this.getContainer();
     const container = this._featureContainer;
@@ -101,7 +101,7 @@ export class FeatureFilter implements MapControl {
     this.update();
   }
 
-  update() {
+  update(): void {
     this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       if (filter) {
@@ -111,7 +111,7 @@ export class FeatureFilter implements MapControl {
     this._updateToggleFilterBtn();
   }
 
-  clean() {
+  clean(): void {
     this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       filter.setDefaultValue();
@@ -119,7 +119,7 @@ export class FeatureFilter implements MapControl {
     this._onFilterChange();
   }
 
-  _createContainer() {
+  private _createContainer() {
     const wrapper = create('div', 'filter-wrapper');
 
     this.closer = create('a', 'info-panel__close material-icons', wrapper);
@@ -137,7 +137,7 @@ export class FeatureFilter implements MapControl {
     return wrapper;
   }
 
-  _toggleFilterContainer(status?: boolean) {
+  private _toggleFilterContainer(status?: boolean) {
     this.options.isOpen = status !== undefined ? status : !this.options.isOpen;
     if (this.options.isOpen) {
       this._featureContainer.style.display = 'block';
@@ -148,7 +148,7 @@ export class FeatureFilter implements MapControl {
     }
   }
 
-  _createToggleFilterBtn(text?: string, addClass?: string) {
+  private _createToggleFilterBtn(text?: string, addClass?: string) {
     this._openFilterBtn = document.createElement('button');
     this._updateToggleFilterBtn(text, addClass);
 
@@ -158,7 +158,7 @@ export class FeatureFilter implements MapControl {
     return this._openFilterBtn;
   }
 
-  _updateToggleFilterBtn(text?: string, addClass?: string) {
+  private _updateToggleFilterBtn(text?: string, addClass?: string) {
     const btn = this._openFilterBtn;
     btn.className = 'btn toggle-filter' + (addClass ? ' ' + addClass : '');
     if (this._layer) {
@@ -170,7 +170,7 @@ export class FeatureFilter implements MapControl {
     }
   }
 
-  _onFilterChange() {
+  private _onFilterChange() {
     const filteredLayers = this.ngwMap.filterLayer(this._layer, (l) => {
       return this._filters.every((f) => f.filter.check(l));
     });
@@ -186,7 +186,7 @@ export class FeatureFilter implements MapControl {
     this._updateFilterControl();
   }
 
-  _addPropFilter(options: PropFilterOptions) {
+  private _addPropFilter(options: PropFilterOptions) {
     const filter = new PropFilter(this._layer, options);
     filter.on('change', (data) => {
       this._onFilterChange();
@@ -198,7 +198,7 @@ export class FeatureFilter implements MapControl {
     });
   }
 
-  _createResetButton() {
+  private _createResetButton() {
     this._resetButton = document.createElement('button');
     this._resetButton.className = 'btn';
     this._resetButton.innerHTML = this.options.resetButtonName;
@@ -208,7 +208,7 @@ export class FeatureFilter implements MapControl {
     return this._resetButton;
   }
 
-  _createFilterControl() {
+  private _createFilterControl() {
     const wrap = document.createElement('div');
     const whole = document.createElement('div');
     whole.className = 'filter-control__whole';
@@ -224,14 +224,14 @@ export class FeatureFilter implements MapControl {
     return wrap;
   }
 
-  _updateWholeControl() {
+  private _updateWholeControl() {
     this._featuresCount = this._layer.getLayers().length;
     this._filteredCount = this._featuresCount;
     this._whole.innerHTML =
       'Всего: ' + (this._featuresCount ? this._featuresCount : '0');
   }
 
-  _updateFilterControl() {
+  private _updateFilterControl() {
     this._filtered.innerHTML = '';
     if (this._filteredCount !== this._featuresCount) {
       const elem = document.createElement('div');
