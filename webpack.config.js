@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,20 +12,12 @@ try {
   throw new Error();
 }
 
-const sassLoaderOptions = {
-  implementation: require('sass'),
-  sassOptions: {
-    fiber: require('fibers'),
-    indentedSyntax: false, // optional
-  },
-};
-
-const cssLoader = {
-  loader: 'css-loader',
-  options: {
-    esModule: false,
-  },
-};
+// const cssLoader = {
+//   loader: 'css-loader',
+//   options: {
+//     esModule: false
+//   }
+// };
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
@@ -34,7 +25,7 @@ module.exports = (env, argv) => {
   return {
     mode: 'development',
 
-    devtool: isProd ? 'none' : 'eval-source-map',
+    devtool: isProd ? false : 'eval-source-map',
 
     entry: {
       main: ['./src/main.ts'],
@@ -44,6 +35,7 @@ module.exports = (env, argv) => {
     output: {
       path: helpers.root('build'),
       filename: '[name][hash:7].js',
+      publicPath: './',
     },
 
     resolve: {
@@ -72,36 +64,15 @@ module.exports = (env, argv) => {
           test: /\.css$/i,
           use: [
             isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-            cssLoader,
+            'css-loader',
           ],
         },
-        // {
-        //   test: /\.s(c|a)ss$/,
-        //   use: [
-        //     isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-        //     cssLoader,
-        //     {
-        //       loader: 'sass-loader',
-        //       options: sassLoaderOptions,
-        //     },
-        //   ],
-        // },
-
         {
-          test: /\.s(c|a)ss$/,
+          test: /\.s[ac]ss$/i,
           use: [
-            {
-              loader: isProd ? MiniCssExtractPlugin.loader : 'style-loader',
-              // options: {
-              //   publicPath: './',
-              // },
-            },
-            cssLoader,
-            // 'postcss-loader',
-            {
-              loader: 'sass-loader',
-              options: sassLoaderOptions,
-            },
+            isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader',
+            'sass-loader',
           ],
         },
         {

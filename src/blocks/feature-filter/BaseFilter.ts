@@ -43,11 +43,11 @@ export abstract class BaseFilter<
 
   getFilterData?(layer: ResourceAdapter): FilterData;
 
-  destroy() {
+  destroy(): void {
     this._removeEventsListeners();
   }
 
-  update(layer?: ResourceAdapter) {
+  update(layer?: ResourceAdapter): void {
     layer = layer || this.layer;
 
     for (let fry = 0; fry < this.choices.length; fry++) {
@@ -70,15 +70,15 @@ export abstract class BaseFilter<
     }
   }
 
-  getContainer() {
+  getContainer(): HTMLElement {
     return this.container;
   }
 
-  check(layer?: LayerDefinition) {
+  check(layer?: LayerDefinition): boolean {
     return true;
   }
 
-  setDefaultValue() {
+  setDefaultValue(): void {
     if (this.options.allovedEmpty) {
       this.value = this.options.empty.value;
     }

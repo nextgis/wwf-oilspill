@@ -142,8 +142,9 @@ export const mapOptions: MapOptions = {
         adapterOptions: {
           selectable: true,
           unselectOnSecondClick: true,
-          paint: (f) => paint(f),
-          selectedPaint: (f) => paint(f, { selected: true }),
+          paint: (f: Feature): VectorAdapterLayerPaint => paint(f),
+          selectedPaint: (f: Feature): VectorAdapterLayerPaint =>
+            paint(f, { selected: true }),
           propertiesFilter: [['delete', 'ne', 1]],
         },
       },

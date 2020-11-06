@@ -19,7 +19,7 @@ export class InfoPanel implements MapControl {
 
   constructor(public options: InfoPanelOptions) {}
 
-  onAdd() {
+  onAdd(): HTMLElement {
     this.container = create('div', 'info-panel');
 
     this.closer = create(
@@ -47,11 +47,15 @@ export class InfoPanel implements MapControl {
     return this.container;
   }
 
-  onRemove() {
+  onRemove(): void {
     // ignore
   }
 
-  show(feature: Feature, fieldNames: FeatureLayerField[], mapLayer: Resource) {
+  show(
+    feature: Feature,
+    fieldNames: FeatureLayerField[],
+    mapLayer: Resource
+  ): void {
     const props = feature.properties;
     const propsAliased = {};
 
@@ -100,13 +104,14 @@ export class InfoPanel implements MapControl {
     this.container.classList.add('active');
   }
 
-  hide() {
+  hide(): void {
     this.container.classList.remove('active');
     if (this.options.onClose) {
       this.options.onClose();
     }
   }
-  checkOverflowing() {
+
+  checkOverflowing(): void {
     setTimeout(() => {
       if (
         this.inner.offsetHeight < this.inner.scrollHeight ||
@@ -119,7 +124,8 @@ export class InfoPanel implements MapControl {
       }
     }, 100);
   }
-  _createHtml(prop, properties) {
+
+  private _createHtml(prop, properties) {
     const wrap = document.createElement('div');
     if (prop.name) {
       const title = document.createElement('div');

@@ -127,7 +127,7 @@ export class OilspillMap {
   }
 
   highlightFeature(
-    e,
+    e: any,
     feature: Feature,
     adapter: ResourceAdapter,
     mapLayer: Resource
@@ -136,14 +136,14 @@ export class OilspillMap {
     this.infoPanel.show(feature, adapter.item.feature_layer.fields, mapLayer);
   }
 
-  async unhighlightFeature() {
+  async unhighlightFeature(): Promise<void> {
     const layers = await this.ngwMap.getNgwLayers();
     for (const t in layers) {
       this.ngwMap.unSelectLayer(layers[t].layer);
     }
   }
 
-  checkFeatureVisibility(e): void {
+  checkFeatureVisibility(e: any): void {
     const map = this.ngwMap.mapAdapter.map;
     const mapWidth = this.ngwMap.getContainer().offsetWidth;
     const mapOffset =
@@ -165,7 +165,7 @@ export class OilspillMap {
     }
   }
 
-  goHome() {
+  goHome(): Promise<void> {
     const fitLayerOpt = this.options.ngwMapOptions.resources.find((x) => x.fit);
     if (fitLayerOpt) {
       const fitLayer = this.ngwMap.getLayer(fitLayerOpt.id);
@@ -179,7 +179,7 @@ export class OilspillMap {
     );
   }
 
-  _zoomToFeatures(layers: LayerDefinition[]) {
+  private _zoomToFeatures(layers: LayerDefinition[]) {
     if (layers && layers.length) {
       const layer = new FeatureGroup(layers.map((x) => x.layer));
       const bounds = layer.getBounds();

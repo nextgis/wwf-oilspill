@@ -71,7 +71,9 @@ export class FeatureFilter implements MapControl {
     return container;
   }
 
-  onRemove() {}
+  onRemove() {
+    // ignore
+  }
 
   setLayer(layer: LayerDef) {
     this._layer = this.ngwMap.getLayer(layer) as ResourceAdapter;

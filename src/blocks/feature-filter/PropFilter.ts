@@ -13,7 +13,7 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
     super(layer, options);
   }
 
-  check(layer: LayerDefinition) {
+  check(layer: LayerDefinition): boolean {
     const prop = this._getLayerProp(layer);
 
     if (prop === this.value) {
@@ -24,7 +24,7 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
     return false;
   }
 
-  getFilterData(layer: ResourceAdapter) {
+  getFilterData(layer: ResourceAdapter): Record<string, number> {
     this.dataDict = {};
     layer.getLayers().forEach((f) => {
       const property = this._getLayerProp(f);
@@ -40,7 +40,7 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
     return this.dataDict;
   }
 
-  _getLayerProp(l: LayerDefinition) {
+  _getLayerProp(l: LayerDefinition): any {
     return (
       l.feature &&
       l.feature.properties &&

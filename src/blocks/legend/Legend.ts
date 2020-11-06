@@ -17,15 +17,15 @@ export class Legend implements MapControl {
     this.container = this.createContainer();
   }
 
-  onAdd() {
+  onAdd(): HTMLElement {
     return this.container;
   }
 
-  onRemove() {
+  onRemove(): void {
     // ignore
   }
 
-  createContainer() {
+  createContainer(): HTMLElement {
     const element = create('div', 'legend');
     const list = create('ul', 'legend-list list-unstyled');
     for (let fry = 0; fry < this.styles.length; fry++) {
