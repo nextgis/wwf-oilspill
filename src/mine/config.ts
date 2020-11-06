@@ -19,6 +19,7 @@ export const mapOptions: MapOptions = {
           detailUrl: '../../oilspill-docs/{id}.pdf',
         },
         adapterOptions: {
+          waitFullLoad: true,
           selectable: true,
           unselectOnSecondClick: true,
           paint: (f: Feature): VectorAdapterLayerPaint => paint(f),

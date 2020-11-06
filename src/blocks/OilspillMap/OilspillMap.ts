@@ -1,7 +1,7 @@
 import './map.scss';
 import 'leaflet/dist/leaflet.css';
 
-import { Map as LMap, FeatureGroup, point } from 'leaflet';
+import { Map as LMap, FeatureGroup, point, LeafletMouseEvent } from 'leaflet';
 import { NgwMap, LayerDefinition } from '@nextgis/ngw-map';
 import MapAdapter from '@nextgis/leaflet-map-adapter';
 import { InfoPanel } from '../info-panel/InfoPanel';
@@ -127,7 +127,7 @@ export class OilspillMap {
   }
 
   highlightFeature(
-    e: any,
+    e: LeafletMouseEvent,
     feature: Feature,
     adapter: ResourceAdapter,
     mapLayer: Resource
@@ -143,7 +143,7 @@ export class OilspillMap {
     }
   }
 
-  checkFeatureVisibility(e: any): void {
+  checkFeatureVisibility(e: LeafletMouseEvent): void {
     const map = this.ngwMap.mapAdapter.map;
     const mapWidth = this.ngwMap.getContainer().offsetWidth;
     const mapOffset =

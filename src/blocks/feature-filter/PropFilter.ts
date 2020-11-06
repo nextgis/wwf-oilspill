@@ -26,7 +26,8 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
 
   getFilterData(layer: ResourceAdapter): Record<string, number> {
     this.dataDict = {};
-    layer.getLayers().forEach((f) => {
+    const layers = layer.getLayers();
+    layers.forEach((f) => {
       const property = this._getLayerProp(f);
       if (property) {
         const exist = this.dataDict[property];
@@ -40,7 +41,7 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
     return this.dataDict;
   }
 
-  _getLayerProp(l: LayerDefinition): any {
+  private _getLayerProp(l: LayerDefinition): any {
     return (
       l.feature &&
       l.feature.properties &&
