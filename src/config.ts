@@ -1,10 +1,6 @@
-import {
-  NgwMapOptions as NMO,
-  NgwLayerOptions,
-  VectorAdapterLayerPaint,
-  CirclePaint
-} from '@nextgis/ngw-map';
+import { NgwMapOptions as NMO, NgwLayerOptions } from '@nextgis/ngw-map';
 import { Feature } from 'geojson';
+import { CirclePaint, VectorAdapterLayerPaint } from '@nextgis/paint';
 
 export interface ResourceMeta {
   popupFields: string[];
@@ -42,34 +38,34 @@ export const styles: Styles[] = [
     label: 'спорные ситуации',
     value: 'спорная ситуация',
     style: {
-      fillColor: '#7b4ea9'
+      fillColor: '#7b4ea9',
     },
     hoverStyle: {
-      fillColor: '#660bc3'
-    }
+      fillColor: '#660bc3',
+    },
   },
   {
     property: 'type',
     label: 'аварийные ситуации',
     value: 'аварийная ситуация',
     style: {
-      fillColor: '#a84d4d'
+      fillColor: '#a84d4d',
     },
     hoverStyle: {
-      fillColor: '#c30b0b'
-    }
+      fillColor: '#c30b0b',
+    },
   },
   {
     property: 'type',
     label: 'аварийные и спорные ситуации',
     value: 'аварийная ситуация + спорная ситуация',
     style: {
-      fillColor: '#a94e92'
+      fillColor: '#a94e92',
     },
     hoverStyle: {
-      fillColor: '#984683'
-    }
-  }
+      fillColor: '#984683',
+    },
+  },
   // {
   //   property: "type",
   //   label: "инцидент",
@@ -103,7 +99,7 @@ export const defPaint = (selected: boolean): VectorAdapterLayerPaint => {
     fillColor: '#ffffff',
     strokeColor: '#ffffff',
     strokeOpacity: 0.6,
-    stroke: true
+    stroke: true,
   };
 };
 
@@ -112,7 +108,7 @@ export function createPaint(
   opt: { selected: boolean } = { selected: false }
 ): VectorAdapterLayerPaint {
   const p = defPaint(opt.selected);
-  const style = styles.find(x => properties[x.property] === x.value);
+  const style = styles.find((x) => properties[x.property] === x.value);
   if (style) {
     const s = opt.selected ? style.hoverStyle : style.style;
     return { ...p, ...s };
@@ -129,6 +125,7 @@ export function paint(
 
 export const mapOptions: MapOptions = {
   ngwMapOptions: {
+    qmsId: 2550,
     baseUrl: 'https://barents-kara-xprojects.nextgis.com',
     center: [60, 65],
     zoom: 4,
@@ -140,24 +137,24 @@ export const mapOptions: MapOptions = {
         meta: {
           popupFields: ['answer'],
           idField: 'idrec',
-          detailUrl: '../../oilspill-docs/{id}.pdf'
+          detailUrl: '../../oilspill-docs/{id}.pdf',
         },
         adapterOptions: {
           selectable: true,
           unselectOnSecondClick: true,
-          paint: f => paint(f),
-          selectedPaint: f => paint(f, { selected: true }),
-          propertiesFilter: [['delete', 'ne', 1]]
-        }
-      }
-    ]
+          paint: (f) => paint(f),
+          selectedPaint: (f) => paint(f, { selected: true }),
+          propertiesFilter: [['delete', 'ne', 1]],
+        },
+      },
+    ],
   },
-  basemap: {
-    url: 'http://tiles.maps.sputnik.ru/tiles/kmt2/{z}/{x}/{y}.png',
-    attribution:
-      "&copy; <a href=http://osm.org/copyright'>OpenStreetMap</a> contributors;Спутник &copy; Ростелеком"
-  },
+  // basemap: {
+  //   url: 'http://tiles.maps.sputnik.ru/tiles/kmt2/{z}/{x}/{y}.png',
+  //   attribution:
+  //     "&copy; <a href=http://osm.org/copyright'>OpenStreetMap</a> contributors;Спутник &copy; Ростелеком",
+  // },
   minOffsetRight: 460,
 
-  styles
+  styles,
 };

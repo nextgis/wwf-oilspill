@@ -1,5 +1,5 @@
 import { Styles } from 'src/config';
-import { dom } from '@nextgis/utils';
+import { create } from '@nextgis/dom';
 import { MapControl } from '@nextgis/webmap';
 
 // import 'legend.scss';
@@ -26,10 +26,10 @@ export class Legend implements MapControl {
   }
 
   createContainer() {
-    var element = dom.create('div', 'legend');
-    var list = dom.create('ul', 'legend-list list-unstyled');
-    for (var fry = 0; fry < this.styles.length; fry++) {
-      var styleBlock = this._createStyleBlock(this.styles[fry]);
+    const element = create('div', 'legend');
+    const list = create('ul', 'legend-list list-unstyled');
+    for (let fry = 0; fry < this.styles.length; fry++) {
+      const styleBlock = this._createStyleBlock(this.styles[fry]);
       if (styleBlock) {
         list.appendChild(styleBlock);
       }
@@ -41,13 +41,19 @@ export class Legend implements MapControl {
 
   private _createStyleBlock(style: Styles) {
     if (style.label) {
-      const listItem = dom.create('li', 'legend-list__item ');
+      const listItem = create('li', 'legend-list__item ');
 
-      const icon = dom.create('div', 'legend-list__icon legend-list__icon--point', listItem);
+      const icon = create(
+        'div',
+        'legend-list__icon legend-list__icon--point',
+        listItem
+      );
       const fillColor = style.style.fillColor || '#fff';
-      icon.style.backgroundColor = fillColor;
+      if (typeof fillColor === 'string') {
+        icon.style.backgroundColor = fillColor;
+      }
 
-      const text = dom.create('div', 'legend-list__text', listItem);
+      const text = create('div', 'legend-list__text', listItem);
       text.innerHTML = style.label;
 
       return listItem;

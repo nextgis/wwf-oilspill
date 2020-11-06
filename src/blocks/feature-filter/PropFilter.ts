@@ -26,10 +26,10 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
 
   getFilterData(layer: ResourceAdapter) {
     this.dataDict = {};
-    layer.getLayers().forEach(f => {
-      let property = this._getLayerProp(f);
+    layer.getLayers().forEach((f) => {
+      const property = this._getLayerProp(f);
       if (property) {
-        let exist = this.dataDict[property];
+        const exist = this.dataDict[property];
         if (exist) {
           this.dataDict[property] = exist + 1;
         } else {
@@ -41,6 +41,10 @@ export class PropFilter extends BaseFilter<PropFilterOptions> {
   }
 
   _getLayerProp(l: LayerDefinition) {
-    return l.feature && l.feature.properties && l.feature.properties[this.options.propName];
+    return (
+      l.feature &&
+      l.feature.properties &&
+      l.feature.properties[this.options.propName]
+    );
   }
 }

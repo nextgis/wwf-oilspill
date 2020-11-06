@@ -10,19 +10,22 @@ interface Elment {
 export class AuthorLogo implements MapControl {
   constructor(public options: Elment) {}
 
-  onAdd() {
+  onAdd(): HTMLElement {
     const opt = this.options;
     if (opt.id) {
       return document.getElementById(opt.id);
     } else if (opt.elem) {
       if (typeof opt.elem === 'string') {
-        return document.createTextNode(opt.elem);
+        const element = document.createElement('div');
+        element.innerHTML = opt.elem;
+        return element;
       }
       return opt.elem;
     }
+    throw new Error('no autor logo element');
   }
 
-  onRemove() {
+  onRemove(): void {
     // ignore
   }
 }

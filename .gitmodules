@@ -1,3 +1,3 @@
-[submodule "nextgisweb_frontend"]
-	path = nextgisweb_frontend
+[submodule "@nextgis"]
+	path = @nextgis
 	url = https://github.com/nextgis/nextgisweb_frontend.git

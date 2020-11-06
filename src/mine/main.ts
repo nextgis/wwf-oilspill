@@ -2,7 +2,7 @@ import 'normalize.css/normalize.css';
 
 import '../scss/main.scss';
 
-import { Map } from '../blocks/map/Map';
+import { OilspillMap } from '../blocks/OilspillMap/OilspillMap';
 import { mapOptions } from './config';
 
-export var map = new Map(mapOptions);
+export const map = new OilspillMap(mapOptions);

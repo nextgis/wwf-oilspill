@@ -1,13 +1,22 @@
-import WebMap, { ToggleControlOptions, HtmlDef, HtmlToggle, TitleToggle } from '@nextgis/webmap';
+import {
+  WebMap,
+  ToggleControlOptions,
+  HtmlDef,
+  HtmlToggle,
+} from '@nextgis/webmap';
+
+export interface ToggleFullscreenOptions {
+  pseudoFullscreen?: boolean;
+}
 
 export class Fullscreen implements ToggleControlOptions {
   html: HtmlDef | HtmlToggle = {
     on: 'fullscreen_exit',
-    off: 'fullscreen'
+    off: 'fullscreen',
   };
   title = {
     off: 'View Fullscreen',
-    on: 'Exit Fullscreen'
+    on: 'Exit Fullscreen',
   };
 
   addClass?: string;
@@ -48,15 +57,15 @@ export class Fullscreen implements ToggleControlOptions {
     }
   }
 
-  onClick() {
+  onClick(): void {
     this.toggleFullscreen();
   }
 
-  isFullscreen() {
+  isFullscreen(): boolean {
     return this.status || false;
   }
 
-  toggleFullscreen(options?) {
+  toggleFullscreen(options?: ToggleFullscreenOptions): void {
     const container = this.webMap.getContainer();
     if (this.isFullscreen()) {
       if (options && options.pseudoFullscreen) {

@@ -1,8 +1,13 @@
 import L from 'leaflet';
 import { PropFilter, PropFilterOptions } from './PropFilter';
-import { dom } from '@nextgis/utils';
+import { create } from '@nextgis/dom';
 
-import NgwMap, { MapControl, LayerDef, LayerDefinition } from '@nextgis/ngw-map';
+import {
+  NgwMap,
+  MapControl,
+  LayerDef,
+  LayerDefinition,
+} from '@nextgis/ngw-map';
 import { ResourceAdapter } from '@nextgis/ngw-kit';
 import { BaseFilter } from './BaseFilter';
 
@@ -32,7 +37,7 @@ export class FeatureFilter implements MapControl {
     resetButtonName: 'Сбросить',
     showFilterBtnName: 'Показать фильтр',
     loadingLayersStr: 'Загрузка...',
-    isOpen: false
+    isOpen: false,
   };
 
   _filters: FilterOptions[] = [];
@@ -46,7 +51,11 @@ export class FeatureFilter implements MapControl {
   private _featuresCount: number;
   private _whole: HTMLElement;
 
-  constructor(private ngwMap: NgwMap, options: FeatureFilterOptions, layer?: LayerDef) {
+  constructor(
+    private ngwMap: NgwMap,
+    options: FeatureFilterOptions,
+    layer?: LayerDef
+  ) {
     this.options = { ...this.options, ...options };
 
     if (layer) {
@@ -68,7 +77,7 @@ export class FeatureFilter implements MapControl {
     this._layer = this.ngwMap.getLayer(layer) as ResourceAdapter;
     // const container = this.getContainer();
     const container = this._featureContainer;
-    this.options.filters.forEach(filterConfig => {
+    this.options.filters.forEach((filterConfig) => {
       if (filterConfig) {
         if (filterConfig.type === 'prop') {
           this._addPropFilter(filterConfig as PropFilterOptions);
@@ -76,14 +85,14 @@ export class FeatureFilter implements MapControl {
       }
     });
 
-    this._filters.forEach(_filter => {
+    this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       if (filter) {
         container.appendChild(filter.getContainer());
       }
     });
 
-    const controls = dom.create('div', 'filter-controls', container);
+    const controls = create('div', 'filter-controls', container);
 
     controls.appendChild(this._createFilterControl());
 
@@ -91,7 +100,7 @@ export class FeatureFilter implements MapControl {
   }
 
   update() {
-    this._filters.forEach(_filter => {
+    this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       if (filter) {
         filter.update();
@@ -101,7 +110,7 @@ export class FeatureFilter implements MapControl {
   }
 
   clean() {
-    this._filters.forEach(_filter => {
+    this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       filter.setDefaultValue();
     });
@@ -109,16 +118,16 @@ export class FeatureFilter implements MapControl {
   }
 
   _createContainer() {
-    const wrapper = dom.create('div', 'filter-wrapper');
+    const wrapper = create('div', 'filter-wrapper');
 
-    this.closer = dom.create('a', 'info-panel__close material-icons', wrapper);
+    this.closer = create('a', 'info-panel__close material-icons', wrapper);
     this.closer.innerHTML = 'close';
     this.closer.setAttribute('href', '#');
     this.closer.onclick = () => {
       this._toggleFilterContainer();
     };
 
-    this._featureContainer = dom.create('div', 'feature-filter', wrapper);
+    this._featureContainer = create('div', 'feature-filter', wrapper);
 
     this._createToggleFilterBtn();
     wrapper.appendChild(this._openFilterBtn);
@@ -160,14 +169,14 @@ export class FeatureFilter implements MapControl {
   }
 
   _onFilterChange() {
-    const filteredLayers = this.ngwMap.filterLayer(this._layer, l => {
-      return this._filters.every(f => f.filter.check(l));
+    const filteredLayers = this.ngwMap.filterLayer(this._layer, (l) => {
+      return this._filters.every((f) => f.filter.check(l));
     });
 
     if (this.options.onChange) {
       this.options.onChange(filteredLayers);
     }
-    this._filters.forEach(_filter => {
+    this._filters.forEach((_filter) => {
       const filter = _filter.filter;
       filter.update();
     });
@@ -177,13 +186,13 @@ export class FeatureFilter implements MapControl {
 
   _addPropFilter(options: PropFilterOptions) {
     const filter = new PropFilter(this._layer, options);
-    filter.on('change', data => {
+    filter.on('change', (data) => {
       this._onFilterChange();
     });
     this._filters.push({
       type: 'prop',
       propName: options.propName,
-      filter: filter
+      filter: filter,
     });
   }
 
@@ -216,7 +225,8 @@ export class FeatureFilter implements MapControl {
   _updateWholeControl() {
     this._featuresCount = this._layer.getLayers().length;
     this._filteredCount = this._featuresCount;
-    this._whole.innerHTML = 'Всего: ' + (this._featuresCount ? this._featuresCount : '0');
+    this._whole.innerHTML =
+      'Всего: ' + (this._featuresCount ? this._featuresCount : '0');
   }
 
   _updateFilterControl() {
@@ -228,7 +238,9 @@ export class FeatureFilter implements MapControl {
         this._filteredCount +
         '</span> ' +
         '<span><a class="material-icons clean-filter-ico" href="#" title="Сбросить фильтр">not_interested</a></span>';
-      const cleanBtn = elem.getElementsByClassName('clean-filter-ico')[0] as HTMLButtonElement;
+      const cleanBtn = elem.getElementsByClassName(
+        'clean-filter-ico'
+      )[0] as HTMLButtonElement;
       cleanBtn.onclick = () => {
         this.clean();
       };

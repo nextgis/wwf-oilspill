@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { template } from '../../utils';
 import { MapControl } from '@nextgis/ngw-map';
 import { FeatureLayerField } from '@nextgis/ngw-connector';
-import { dom } from '@nextgis/utils';
+import { create } from '@nextgis/dom';
 import { Feature } from 'geojson';
 import { Resource } from '../../config';
 // import './info-panel.scss';
@@ -20,15 +20,19 @@ export class InfoPanel implements MapControl {
   constructor(public options: InfoPanelOptions) {}
 
   onAdd() {
-    this.container = dom.create('div', 'info-panel');
+    this.container = create('div', 'info-panel');
 
-    this.closer = dom.create('a', 'info-panel__close material-icons', this.container);
+    this.closer = create(
+      'a',
+      'info-panel__close material-icons',
+      this.container
+    );
     this.closer.innerHTML = 'close';
     this.closer.setAttribute('href', '#');
 
-    this.inner = dom.create('div', 'info-panel__inner', this.container);
+    this.inner = create('div', 'info-panel__inner', this.container);
 
-    this.closer.addEventListener('click', e => {
+    this.closer.addEventListener('click', (e) => {
       e.preventDefault();
       this.hide();
     });
@@ -81,10 +85,10 @@ export class InfoPanel implements MapControl {
     infoPanel.appendChild(html);
 
     const btn = document.getElementsByClassName('btn')[0] as HTMLElement;
-    L.DomEvent.on(btn, 'click', e => {
+    L.DomEvent.on(btn, 'click', (e) => {
       e.preventDefault();
       const url = template(mapLayer.meta.detailUrl, {
-        id: feature.properties[mapLayer.meta.idField]
+        id: feature.properties[mapLayer.meta.idField],
       });
       const win = window.open(url, '_blank');
       win.focus();
@@ -145,7 +149,8 @@ export class InfoPanel implements MapControl {
       const value = properties[key];
       const item = document.createElement('div');
       item.className = 'info-panel__item';
-      item.innerHTML = '<div class="info-panel__item-title">' + key + '</div > ' + value;
+      item.innerHTML =
+        '<div class="info-panel__item-title">' + key + '</div > ' + value;
       wrap.appendChild(item);
     }
     if (prop.name) {

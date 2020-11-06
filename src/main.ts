@@ -1,8 +1,8 @@
-import { Map } from './blocks/map/Map';
+import { OilspillMap } from './blocks/OilspillMap/OilspillMap';
 import { mapOptions } from './config';
 
 import 'normalize.css/normalize.css';
 
 import './scss/main.scss';
 
-export var map = new Map(mapOptions);
+export const map = new OilspillMap(mapOptions);

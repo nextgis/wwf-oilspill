@@ -13,10 +13,12 @@ export type FilterData = Record<string, number>;
 const OPTIONS: BaseFilterOptions = {
   label: 'filter',
   empty: { name: 'Все', value: '*' },
-  allovedEmpty: true
+  allovedEmpty: true,
 };
 
-export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions> extends EventEmitter {
+export abstract class BaseFilter<
+  O extends BaseFilterOptions = BaseFilterOptions
+> extends EventEmitter {
   options: O;
 
   protected choices: any[];
@@ -49,21 +51,21 @@ export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions
     layer = layer || this.layer;
 
     for (let fry = 0; fry < this.choices.length; fry++) {
-      let option = this.choices[fry];
-      let parentNode = option && option.parentNode;
+      const option = this.choices[fry];
+      const parentNode = option && option.parentNode;
       if (parentNode) {
         parentNode.removeChild(option);
       }
     }
 
-    let filterData = this.getFilterData(layer);
+    const filterData = this.getFilterData(layer);
     if (this.options.allovedEmpty) {
-      let empty = this.options.empty;
+      const empty = this.options.empty;
       this._addChoice(empty.name, empty.value);
     }
-    let sortedData = Object.keys(filterData).sort();
+    const sortedData = Object.keys(filterData).sort();
     for (let f = 0; f < sortedData.length; f++) {
-      let name = sortedData[f];
+      const name = sortedData[f];
       this._addChoice(name, name, filterData[name]);
     }
   }
@@ -83,7 +85,7 @@ export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions
   }
 
   private _createContainer() {
-    let container = document.createElement('div');
+    const container = document.createElement('div');
     container.className = 'filter-list';
     this.labelContainer = this._createLabel();
     this.labelContainer.appendChild(this._createSelectContainer());
@@ -93,7 +95,7 @@ export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions
   }
 
   private _createLabel() {
-    let label = document.createElement('label');
+    const label = document.createElement('label');
     if (this.options.label) {
       label.appendChild(document.createTextNode(this.options.label + ': '));
     }
@@ -107,7 +109,7 @@ export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions
   }
 
   private _addChoice(name: string, value: any, count?: number) {
-    let option = document.createElement('option');
+    const option = document.createElement('option');
     option.innerHTML = name + (count ? ' (' + count + ')' : '');
     option.setAttribute('value', value);
     if (value === this.value) {
@@ -118,7 +120,7 @@ export abstract class BaseFilter<O extends BaseFilterOptions = BaseFilterOptions
   }
 
   private _onSelectChange(e) {
-    let value = e.target.value;
+    const value = e.target.value;
     this.value = value;
     this.emit('change', { value: value });
   }
