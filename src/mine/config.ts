@@ -16,7 +16,7 @@ export const mapOptions: MapOptions = {
         meta: {
           popupFields: ['answer'],
           idField: 'idrec',
-          detailUrl: '../../oilspill-docs/{id}.pdf',
+          detailUrl: 'https://nextgis.ru/demo/oilspill-docs/{id}.pdf',
         },
         adapterOptions: {
           waitFullLoad: true,

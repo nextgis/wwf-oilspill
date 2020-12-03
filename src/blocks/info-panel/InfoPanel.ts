@@ -16,6 +16,7 @@ export class InfoPanel implements MapControl {
   private container: HTMLElement;
   private closer: HTMLElement;
   private inner: HTMLElement;
+  private moreBtn: HTMLButtonElement;
 
   constructor(public options: InfoPanelOptions) {}
 
@@ -88,7 +89,8 @@ export class InfoPanel implements MapControl {
     infoPanel.innerHTML = '';
     infoPanel.appendChild(html);
 
-    const btn = document.getElementsByClassName('btn')[0] as HTMLElement;
+    // const btn = document.getElementsByClassName('btn')[0] as HTMLElement;
+    const btn = this.moreBtn;
     L.DomEvent.on(btn, 'click', (e) => {
       e.preventDefault();
       const url = template(mapLayer.meta.detailUrl, {
@@ -164,6 +166,7 @@ export class InfoPanel implements MapControl {
       btn.className = 'btn';
       btn.innerHTML = 'Подробнее';
       wrap.appendChild(btn);
+      this.moreBtn = btn;
     }
     return wrap;
   }

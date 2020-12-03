@@ -2,7 +2,8 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const helpers = require('./helpers');
+        const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin
 
 let alias = {};
 try {
@@ -104,7 +105,6 @@ module.exports = (env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({
         filename: '[name][hash:7].css',
-        allChunks: true,
       }),
       new ESLintPlugin({
         fix: true,
@@ -112,7 +112,8 @@ module.exports = (env, argv) => {
         extensions: ['ts'],
       }),
 
-      // new HtmlWebpackPlugin({ template: 'src/index.html' })
+      // new BundleAnalyzerPlugin(),
+
       new HtmlWebpackPlugin({
         chunks: ['main'],
         template: 'src/index.html',
