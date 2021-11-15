@@ -26,7 +26,7 @@ export class InfoPanel implements MapControl {
     this.closer = create(
       'a',
       'info-panel__close material-icons',
-      this.container
+      this.container,
     );
     this.closer.innerHTML = 'close';
     this.closer.setAttribute('href', '#');
@@ -55,7 +55,7 @@ export class InfoPanel implements MapControl {
   show(
     feature: Feature,
     fieldNames: FeatureLayerField[],
-    mapLayer: Resource
+    mapLayer: Resource,
   ): void {
     const props = feature.properties;
     const propsAliased = {};

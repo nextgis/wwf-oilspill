@@ -54,7 +54,7 @@ export class FeatureFilter implements MapControl {
   constructor(
     private ngwMap: NgwMap,
     options: FeatureFilterOptions,
-    layer?: LayerDef
+    layer?: LayerDef,
   ) {
     this.options = { ...this.options, ...options };
 
@@ -241,7 +241,7 @@ export class FeatureFilter implements MapControl {
         '</span> ' +
         '<span><a class="material-icons clean-filter-ico" href="#" title="Сбросить фильтр">not_interested</a></span>';
       const cleanBtn = elem.getElementsByClassName(
-        'clean-filter-ico'
+        'clean-filter-ico',
       )[0] as HTMLButtonElement;
       cleanBtn.onclick = () => {
         this.clean();

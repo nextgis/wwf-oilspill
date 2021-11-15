@@ -17,7 +17,7 @@ const OPTIONS: BaseFilterOptions = {
 };
 
 export abstract class BaseFilter<
-  O extends BaseFilterOptions = BaseFilterOptions
+  O extends BaseFilterOptions = BaseFilterOptions,
 > extends EventEmitter {
   options: O;
 

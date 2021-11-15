@@ -12,7 +12,7 @@
     "moduleResolution": "node",
     "lib": ["es6", "dom"],
     /* Strict Type-Checking Options */
-    "strict": false, /* Enable all strict type-checking options. */
+    "strict": false /* Enable all strict type-checking options. */,
     /* Module Resolution Options */
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
     "sourceMap": true,
@@ -23,6 +23,11 @@
       "@nextgis/*": ["@nextgis/packages/*/src/"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.json", "@nextgis/packages/global.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json",
+    "@nextgis/packages/global.d.ts",
+    "@nextgis/packages/leaflet-map-adapter/src/leaflet.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -47,33 +47,33 @@ export class OilspillMap {
             on: '<a class="material-icons">fullscreen_exit</a>',
             off: '<a class="material-icons">fullscreen</a>',
           },
-        })
+        }),
       ),
-      'top-left'
+      'top-left',
     );
     this.ngwMap.addControl(
       this.ngwMap.createButtonControl({
         html: '<a class="material-icons">home</a>',
         onClick: () => this.goHome(),
       }),
-      'top-left'
+      'top-left',
     );
     this.ngwMap.onLoad('controls:create').then(() => {
       this.ngwMap.addControl(
         this.ngwMap.createControl(this.authorLogo),
-        'bottom-right'
+        'bottom-right',
       );
     });
     this.ngwMap.addControl(
       this.ngwMap.createControl(this.wwfLogo),
-      'bottom-left'
+      'bottom-left',
     );
 
     // add Legend
     this.legend = new Legend({ styles });
     this.ngwMap.addControl(
       this.ngwMap.createControl(this.legend, { margin: true }),
-      'bottom-left'
+      'bottom-left',
     );
 
     // add Filter-list
@@ -89,7 +89,7 @@ export class OilspillMap {
     });
     this.ngwMap.addControl(
       this.ngwMap.createControl(this.featureFilter, { margin: true }),
-      'bottom-left'
+      'bottom-left',
     );
 
     for (const r of resources) {
@@ -122,7 +122,7 @@ export class OilspillMap {
     });
     this.ngwMap.addControl(
       this.ngwMap.createControl(this.infoPanel, { margin: true }),
-      'top-right'
+      'top-right',
     );
   }
 
@@ -130,7 +130,7 @@ export class OilspillMap {
     e: LeafletMouseEvent,
     feature: Feature,
     adapter: ResourceAdapter,
-    mapLayer: Resource
+    mapLayer: Resource,
   ): void {
     this.checkFeatureVisibility(e);
     this.infoPanel.show(feature, adapter.item.feature_layer.fields, mapLayer);
@@ -157,7 +157,7 @@ export class OilspillMap {
 
       newMapCenterPixels = point(
         mapCenterPixels.x + mapOffset,
-        mapCenterPixels.y
+        mapCenterPixels.y,
       );
       newMapCenter = map.containerPointToLatLng(newMapCenterPixels);
 
@@ -175,7 +175,7 @@ export class OilspillMap {
     }
     this.ngwMap.setView(
       this.options.ngwMapOptions.center,
-      this.options.ngwMapOptions.zoom
+      this.options.ngwMapOptions.zoom,
     );
   }
 

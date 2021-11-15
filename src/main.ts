@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import { OilspillMap } from './blocks/OilspillMap/OilspillMap';
 import { mapOptions } from './config';
 

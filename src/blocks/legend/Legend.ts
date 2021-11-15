@@ -46,7 +46,7 @@ export class Legend implements MapControl {
       const icon = create(
         'div',
         'legend-list__icon legend-list__icon--point',
-        listItem
+        listItem,
       );
       const fillColor = style.style.fillColor || '#fff';
       if (typeof fillColor === 'string') {

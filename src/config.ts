@@ -1,6 +1,7 @@
-import { NgwMapOptions as NMO, NgwLayerOptions } from '@nextgis/ngw-map';
+import { NgwMapOptions as NMO } from '@nextgis/ngw-map';
 import { Feature } from 'geojson';
 import { CirclePaint, VectorAdapterLayerPaint } from '@nextgis/paint';
+import { NgwLayerOptions } from '@nextgis/ngw-kit';
 
 export interface ResourceMeta {
   popupFields: string[];
@@ -105,7 +106,7 @@ export const defPaint = (selected: boolean): VectorAdapterLayerPaint => {
 
 export function createPaint(
   properties: Record<string, unknown>,
-  opt: { selected: boolean } = { selected: false }
+  opt: { selected: boolean } = { selected: false },
 ): VectorAdapterLayerPaint {
   const p = defPaint(opt.selected);
   const style = styles.find((x) => properties[x.property] === x.value);
@@ -118,14 +119,14 @@ export function createPaint(
 
 export function paint(
   feature: Feature,
-  opt: { selected: boolean } = { selected: false }
+  opt: { selected: boolean } = { selected: false },
 ): VectorAdapterLayerPaint {
   return createPaint(feature.properties, opt);
 }
 
 export const mapOptions: MapOptions = {
   ngwMapOptions: {
-    qmsId: 2550,
+    osm: true,
     baseUrl: 'https://barents-kara-xprojects.nextgis.com',
     center: [60, 65],
     zoom: 4,
