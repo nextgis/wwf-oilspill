@@ -102,37 +102,15 @@ module.exports = (env, argv) => {
             'sass-loader',
           ],
         },
+
         {
-          test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [
-            'url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name]-[hash:7].[ext]',
-          ],
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
         },
         {
-          test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          use: [
-            'url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[name]-[hash:7].[ext]',
-          ],
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: 'asset/resource',
         },
-        {
-          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-          use: ['file-loader?name=fonts/[name]-[hash:7].[ext]'],
-        },
-        {
-          test: /\.(jpe?g|png|gif|svg)$/i,
-          use: [
-            'file-loader?name=images/[name].[ext]',
-            'image-webpack-loader?bypassOnDebug',
-          ],
-        },
-        // {
-        //   test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        //   type: 'asset/resource',
-        // },
-        // {
-        //   test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        //   type: 'asset/resource',
-        // },
       ],
     },
 

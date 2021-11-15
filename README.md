@@ -14,9 +14,9 @@ npm start
 ## Docker
 
 ```bash
-docker build -t registry.nextgis.com/wwf-oilspill:latest . && docker push registry.nextgis.com/wwf-oilspill:latest
+docker build -t registry.nextgis.com/wwf-oilspill:4.0.0 -f docker/Dockerfile . && docker push registry.nextgis.com/wwf-oilspill:4.0.0
 
-docker run -it -p 8080:8080 --rm --name wwf-oilspill registry.nextgis.com/wwf-oilspill:latest
+docker run -it -p 8080:80 --rm --name wwf-oilspill registry.nextgis.com/wwf-oilspill:4.0.0
 
 docker push registry.nextgis.com/wwf-oilspill:latest
 ```
